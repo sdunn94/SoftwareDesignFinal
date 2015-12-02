@@ -64,7 +64,7 @@
             <asp:Button ID="SubmitButton" runat="server" OnClick="SubmitButton_Click" Text="Submit" Visible="False" />
             <br />
             <asp:Button ID="YesButton" runat="server" OnClick="YesButton_Click" Text="Yes" Visible="False" />
-            &nbsp;<asp:Button ID="AssassinationNoButton" runat="server" OnClick="AssassinationNoButton_Click" Text="No" Visible="False" />
+            &nbsp;<asp:Button ID="ChallengeSubmitButton" runat="server" OnClick="ChallengeSubmitButton_Click" Text="Submit" Visible="False" />
             <br />
             <asp:Button ID="NoButton" runat="server" OnClick="NoButton_Click" Text="No" Visible="False" Width="37px" />
         </asp:Panel>

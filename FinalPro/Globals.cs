@@ -88,5 +88,19 @@ namespace FinalPro
                 deadCounterAmbassador = value;
             }
         }
+
+        static string challengedOrBlockedPlayer;
+
+        public static string CorBPlayer
+        {
+            get
+            {
+                return challengedOrBlockedPlayer;
+            }
+            set
+            {
+                challengedOrBlockedPlayer = value;
+            }
+        }
     }
 }
