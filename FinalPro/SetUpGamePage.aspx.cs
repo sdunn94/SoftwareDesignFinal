@@ -23,6 +23,11 @@ namespace FinalPro
 
         protected void StartGameButton_Click(object sender, EventArgs e)
         {
+            Globals.GlobalAnalysis.getCardsInHand().Clear();
+            Globals.GlobalAnalysis.getDeadCards().Clear();
+            Globals.GlobalAnalysis.getPlayerUsernames().Clear();
+            Globals.GlobalAnalysis.getActions().Clear();
+
             int numPlayers = 0;
             if (PlayerOneDD.SelectedValue != "1")
             {

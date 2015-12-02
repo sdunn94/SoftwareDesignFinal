@@ -10,6 +10,7 @@ namespace FinalPro
         private List<Card> cardsInHand = new List<Card>();
         private List<Card> deadCards = new List<Card>();
         private List<string> playerUsernames = new List<string>();
+        private List<string> actions = new List<string>();
         //private List<Card> cardsKnownInDeck = new List<Card>();
 
         public Analyze()
@@ -30,6 +31,16 @@ namespace FinalPro
         public List<string> getPlayerUsernames()
         {
             return playerUsernames;
+        }
+
+        public List<string> getActions()
+        {
+            return actions;
+        }
+
+        public void addActions(string action)
+        {
+            actions.Add(action);
         }
 
         public void addPlayerUsername(string un)

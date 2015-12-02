@@ -76,6 +76,8 @@ namespace FinalPro
             com.ExecuteNonQuery();
             conn.Close();
 
+            Globals.GlobalAnalysis.addActions(playerUsername + ": " + ActionDD.SelectedItem.Text);
+
             if(ActionDD.SelectedItem.Text == "Foreign Aid")
             {
                 //is there a block
@@ -84,11 +86,27 @@ namespace FinalPro
                 YesButton.Visible = true;
                 NoButton.Visible = true;
             }
-            if(ActionDD.SelectedItem.Text == "Coup")
+            else if(ActionDD.SelectedItem.Text == "Coup")
             {
                 //which card did they get rid of
+                Label1.Visible = true;
+                Label1.Text = "Who loses a card and what card did they lose?";
+                SecondPlayerDD.Visible = true;
+                SecondPlayerDD.Items.Clear();
+                SecondPlayerDD.Items.Add("Select Player");
+                SecondPlayerDD.Items.Add(Session["New"].ToString());
+                foreach (string username in Globals.GlobalAnalysis.getPlayerUsernames())
+                {
+                    SecondPlayerDD.Items.Add(username);
+                }
+
+                CardToLoseDD.Visible = true;
+                CardToLoseDD.Items.Clear();
+                populateCardsLeftDropDownList(CardToLoseDD);
+
+                SubmitButton.Visible = true;
             }
-            if(ActionDD.SelectedItem.Text == "Tax")
+            else if (ActionDD.SelectedItem.Text == "Tax")
             {
                 //did someone challenge this
                 Label1.Visible = true;
@@ -96,7 +114,7 @@ namespace FinalPro
                 YesButton.Visible = true;
                 NoButton.Visible = true;
             }
-            if(ActionDD.SelectedItem.Text == "Block Foreign Aid")
+            else if (ActionDD.SelectedItem.Text == "Block Foreign Aid")
             {
                 //did someone challenge this
                 Label1.Visible = true;
@@ -104,7 +122,7 @@ namespace FinalPro
                 YesButton.Visible = true;
                 NoButton.Visible = true;
             }
-            if(ActionDD.SelectedItem.Text == "Assassinate")
+            else if (ActionDD.SelectedItem.Text == "Assassinate")
             {
                 //did someone block or challenge (if no one challenges the person being assassinated loses a card)
                 Label1.Visible = true;
@@ -113,7 +131,7 @@ namespace FinalPro
                 AssassinationNoButton.Visible = true;
                 //NoButton.Visible = true; different button because different functionality
             }
-            if(ActionDD.SelectedItem.Text == "Exchange")
+            else if (ActionDD.SelectedItem.Text == "Exchange")
             {
                 //did someone challenge this
                 Label1.Visible = true;
@@ -121,7 +139,7 @@ namespace FinalPro
                 YesButton.Visible = true;
                 NoButton.Visible = true;
             }
-            if(ActionDD.SelectedItem.Text == "Block Stealing")
+            else if (ActionDD.SelectedItem.Text == "Block Stealing")
             {
                 //did someone challenge this
                 Label1.Visible = true;
@@ -129,7 +147,7 @@ namespace FinalPro
                 YesButton.Visible = true;
                 NoButton.Visible = true;
             }
-            if(ActionDD.SelectedItem.Text == "Block Assassination")
+            else if (ActionDD.SelectedItem.Text == "Block Assassination")
             {
                 //did someone challenge this
                 Label1.Visible = true;
@@ -137,40 +155,44 @@ namespace FinalPro
                 YesButton.Visible = true;
                 NoButton.Visible = true;
             }
-            if(ActionDD.SelectedItem.Text == "Challenge Tax")
+            else if (ActionDD.SelectedItem.Text == "Challenge Tax")
             {
                 //if challenger wins opponent loses a card
                 //if opponent wins challenger loses a card
             }
-            if (ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid")
+            else if (ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid")
             {
                 //if challenger wins opponent loses a card
                 //if opponent wins challenger loses a card
             }
-            if (ActionDD.SelectedItem.Text == "Challenge Assassinate")
+            else if (ActionDD.SelectedItem.Text == "Challenge Assassinate")
             {
                 //if challenger wins opponent loses a card unless it is the person being assassinated they lose two cards (if they have 2)
                 //if opponent wins challenger loses a card
             }
-            if (ActionDD.SelectedItem.Text == "Challenge Exchange")
+            else if (ActionDD.SelectedItem.Text == "Challenge Exchange")
             {
                 //if challenger wins opponent loses a card
                 //if opponent wins challenger loses a card
             }
-            if (ActionDD.SelectedItem.Text == "Challenge Block Stealing")
+            else if (ActionDD.SelectedItem.Text == "Challenge Block Stealing")
             {
                 //if challenger wins opponent loses a card
                 //if opponent wins challenger loses a card
             }
-            if (ActionDD.SelectedItem.Text == "Challenge Stealing")
+            else if (ActionDD.SelectedItem.Text == "Challenge Stealing")
             {
                 //if challenger wins opponent loses a card
                 //if opponent wins challenger loses a card
             }
-            if (ActionDD.SelectedItem.Text == "Challenge Block Assassination")
+            else if (ActionDD.SelectedItem.Text == "Challenge Block Assassination")
             {
                 //if challenger wins opponent loses a card and person being assassinated loses a card
                 //if opponent wins challenger loses a card
+            }
+            else
+            {
+                Response.Redirect("GamePlayPage.aspx");
             }
             
             //Response.Redirect("GamePlayPage.aspx");
@@ -189,6 +211,125 @@ namespace FinalPro
         protected void AssassinationNoButton_Click(object sender, EventArgs e)
         {
             //show drop down for who loses a card and what card
+        }
+
+        private void populateCardsLeftDropDownList(DropDownList list)
+        {
+            Card c1 = Globals.GlobalAnalysis.getCardsInHand()[0];
+            Card c2 = null;
+            if (Globals.GlobalAnalysis.getCardsInHand().Count == 2)
+            {
+                c2 = Globals.GlobalAnalysis.getCardsInHand()[1];
+            }
+                       
+            if (!(Globals.DukeCounter == 2 && (c1.getCardType().ToString() == "Duke" || (c2 != null && c2.getCardType().ToString() == "Duke"))))
+            {
+                list.Items.Add("Duke");
+            }
+            else if (!(Globals.DukeCounter == 1 && (c1.getCardType().ToString() == "Duke" && (c2 != null && c2.getCardType().ToString() == "Duke"))))
+            {
+                list.Items.Add("Duke");
+            }
+            else if(!(Globals.DukeCounter == 3))
+            {
+                list.Items.Add("Duke");
+            }
+
+            if (!(Globals.CaptainCounter == 2 && (c1.getCardType().ToString() == "Captain" || (c2 != null && c2.getCardType().ToString() == "Captain"))))
+            {
+                list.Items.Add("Captain");
+            }
+            else if (!(Globals.CaptainCounter == 1 && (c1.getCardType().ToString() == "Captain" && (c2 != null && c2.getCardType().ToString() == "Captain"))))
+            {
+                list.Items.Add("Captain");
+            }
+            else if (!(Globals.CaptainCounter == 3))
+            {
+                list.Items.Add("Captain");
+            }
+
+            if (!(Globals.AssassinCounter == 2 && (c1.getCardType().ToString() == "Assassin" || (c2 != null && c2.getCardType().ToString() == "Assassin"))))
+            {
+                list.Items.Add("Assassin");
+            }
+            else if (!(Globals.AssassinCounter == 1 && (c1.getCardType().ToString() == "Assassin" && (c2 != null && c2.getCardType().ToString() == "Assassin"))))
+            {
+                list.Items.Add("Assassin");
+            }
+            else if (!(Globals.AssassinCounter == 3))
+            {
+                list.Items.Add("Assassin");
+            }
+
+            if (!(Globals.ContessaCounter == 2 && (c1.getCardType().ToString() == "Contessa" || (c2 != null && c2.getCardType().ToString() == "Contessa"))))
+            {
+                list.Items.Add("Contessa");
+            }
+            else if (!(Globals.ContessaCounter == 1 && (c1.getCardType().ToString() == "Contessa" && (c2 != null && c2.getCardType().ToString() == "Contessa"))))
+            {
+                list.Items.Add("Contessa");
+            }
+            else if (!(Globals.ContessaCounter == 3))
+            {
+                list.Items.Add("Contessa");
+            }
+
+            if (!(Globals.AmbassadorCounter == 2 && (c1.getCardType().ToString() == "Ambassador" || (c2 != null && c2.getCardType().ToString() == "Ambassador"))))
+            {
+                list.Items.Add("Ambassador");
+            }
+            else if (!(Globals.AmbassadorCounter == 1 && (c1.getCardType().ToString() == "Ambassador" && (c2 != null && c2.getCardType().ToString() == "Ambassador"))))
+            {
+                list.Items.Add("Ambassador");
+            }
+            else if (!(Globals.AmbassadorCounter == 3))
+            {
+                list.Items.Add("Ambassador");
+            }  
+        }
+
+        protected void SubmitButton_Click(object sender, EventArgs e)
+        {
+            string card = CardToLoseDD.SelectedItem.Text;
+            string playerUsername = SecondPlayerDD.SelectedItem.Text.ToString();
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
+            conn.Open();
+            string getUserId = "SELECT Id FROM UserDataTable WHERE Username = '" + playerUsername + "'";
+            SqlCommand com1 = new SqlCommand(getUserId, conn);
+            int playerId = Convert.ToInt32(com1.ExecuteScalar().ToString());
+
+            string insertAction = "INSERT INTO ActionDataTable (Player, ActionType, Action) VALUES (@id, @at, @a)";
+            SqlCommand com = new SqlCommand(insertAction, conn);
+            com.Parameters.AddWithValue("@id", playerId);
+            com.Parameters.AddWithValue("@at", "Lose Card");
+            com.Parameters.AddWithValue("@a", "Lost a " + card);
+            com.ExecuteNonQuery();
+            conn.Close();
+
+            Globals.GlobalAnalysis.addActions(playerUsername + ": Lost the " + card);
+
+            if(card == "Duke")
+            {
+                Globals.DukeCounter++;
+            }
+            else if(card == "Assassin")
+            {
+                Globals.AssassinCounter++;
+            }
+            else if(card == "Contessa")
+            {
+                Globals.ContessaCounter++;
+            }
+            else if(card == "Captain")
+            {
+                Globals.CaptainCounter++;
+            }
+            else if(card == "Ambassador")
+            {
+                Globals.AmbassadorCounter++;
+            }
+
+            Response.Redirect("GamePlayPage.aspx");
         }
     }
 }

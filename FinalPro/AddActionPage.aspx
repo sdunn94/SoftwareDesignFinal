@@ -55,6 +55,13 @@
     </div>
         <asp:Panel ID="Panel1" runat="server" Height="211px">
             <asp:Label ID="Label1" runat="server" Text="Did someone counteract or challenge?" Visible="False"></asp:Label>
+            &nbsp;<asp:DropDownList ID="SecondPlayerDD" runat="server" Visible="False">
+            </asp:DropDownList>
+            &nbsp;
+            <asp:DropDownList ID="CardToLoseDD" runat="server" Visible="False">
+            </asp:DropDownList>
+            &nbsp;
+            <asp:Button ID="SubmitButton" runat="server" OnClick="SubmitButton_Click" Text="Submit" Visible="False" />
             <br />
             <asp:Button ID="YesButton" runat="server" OnClick="YesButton_Click" Text="Yes" Visible="False" />
             &nbsp;<asp:Button ID="AssassinationNoButton" runat="server" OnClick="AssassinationNoButton_Click" Text="No" Visible="False" />

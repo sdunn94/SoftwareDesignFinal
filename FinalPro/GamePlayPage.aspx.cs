@@ -25,25 +25,10 @@ namespace FinalPro
             if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 5)
                 PlayerFiveLB.Text = Globals.GlobalAnalysis.getPlayerUsernames()[4];
 
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
-            SqlDataReader myReader;
-            conn.Open();
-            string getActions = "SELECT Player, ActionType, Action FROM ActionDataTable";
-            SqlCommand com = new SqlCommand(getActions, conn);
-            myReader = com.ExecuteReader();
-
-            if (myReader.HasRows)
+            ActionListBox.Items.Clear();
+            foreach(string action in Globals.GlobalAnalysis.getActions())
             {
-                while (myReader.Read())
-                {
-                    int playerId = myReader.GetInt32(0);
-                    string getUsername = "SELECT Username FROM UserDataTable WHERE Id = " + playerId;
-                    SqlCommand com1 = new SqlCommand(getUsername, conn);
-                    string playerUsername = Convert.ToString(com1.ExecuteScalar().ToString());
-                    ListItem item = new ListItem();
-                    item.Text = playerUsername + ", " + myReader.GetString(1) + ", " + myReader.GetString(2);
-                    ActionListBox.Items.Add(item);
-                }
+                ActionListBox.Items.Add(action);
             }
         }
 
