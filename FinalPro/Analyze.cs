@@ -9,7 +9,13 @@ namespace FinalPro
     {
         private List<Card> cardsInHand = new List<Card>();
         private List<Card> deadCards = new List<Card>();
-        private List<Card> cardsKnownInDeck = new List<Card>();
+        private List<string> playerUsernames = new List<string>();
+        //private List<Card> cardsKnownInDeck = new List<Card>();
+
+        public Analyze()
+        {
+
+        }
 
         public List<Card> getCardsInHand()
         {
@@ -21,10 +27,20 @@ namespace FinalPro
             return deadCards;
         }
 
-        public List<Card> getCardsKnownInDeck()
+        public List<string> getPlayerUsernames()
         {
-            return cardsKnownInDeck;
+            return playerUsernames;
         }
+
+        public void addPlayerUsername(string un)
+        {
+            playerUsernames.Add(un);
+        }
+
+        //public List<Card> getCardsKnownInDeck()
+        //{
+        //    return cardsKnownInDeck;
+        //}
 
         public void addCardsToHand(string card)
         {
@@ -41,10 +57,10 @@ namespace FinalPro
             deadCards.Add(c);
         }
 
-        public void addKnownCardInDeck(string card)
-        {
-            Card c = new Card(card);
-            cardsKnownInDeck.Add(c);
-        }
+        //public void addKnownCardInDeck(string card)
+        //{
+        //    Card c = new Card(card);
+        //    cardsKnownInDeck.Add(c);
+        //}
     }
 }

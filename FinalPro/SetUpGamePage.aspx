@@ -30,23 +30,25 @@
         </asp:DropDownList>
         <br />
         <br />
-        <asp:Button ID="Button1" runat="server" Text="Add New Player" />
+        <asp:Button ID="AddNewPlayerButton" runat="server" Text="Add New Player" OnClick="AddNewPlayerButton_Click" />
         <br />
         <br />
         Your Cards<br />
         <asp:DropDownList ID="CardOneDD" runat="server">
+            <asp:ListItem>Select Card</asp:ListItem>
             <asp:ListItem>Duke</asp:ListItem>
             <asp:ListItem>Assassin</asp:ListItem>
             <asp:ListItem>Ambassador</asp:ListItem>
-            <asp:ListItem>Captian</asp:ListItem>
+            <asp:ListItem>Captain</asp:ListItem>
             <asp:ListItem>Contessa</asp:ListItem>
         </asp:DropDownList>
 &nbsp;&nbsp;
         <asp:DropDownList ID="CardTwoDD" runat="server">
+            <asp:ListItem>Select Card</asp:ListItem>
             <asp:ListItem>Duke</asp:ListItem>
             <asp:ListItem>Assassin</asp:ListItem>
             <asp:ListItem>Ambassador</asp:ListItem>
-            <asp:ListItem>Captian</asp:ListItem>
+            <asp:ListItem>Captain</asp:ListItem>
             <asp:ListItem>Contessa</asp:ListItem>
         </asp:DropDownList>
         <br />

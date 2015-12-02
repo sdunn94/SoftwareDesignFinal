@@ -17,7 +17,7 @@ namespace FinalPro
 
         public void setCardType(string t)
         {
-            if(t == "Duke" || t == "Assassin" || t == "Contessa" || t == "Captian" || t == "Ambassador")
+            if(t == "Duke" || t == "Assassin" || t == "Contessa" || t == "Captain" || t == "Ambassador")
             {
                 cardType = t;
             }

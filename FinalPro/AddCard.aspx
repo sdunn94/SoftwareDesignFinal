@@ -11,7 +11,12 @@
     <div>
     
         Choose A Card<br />
-        <asp:DropDownList ID="DropDownList1" runat="server">
+        <asp:DropDownList ID="DeadCardListDD" runat="server">
+            <asp:ListItem>Duke</asp:ListItem>
+            <asp:ListItem>Assassin</asp:ListItem>
+            <asp:ListItem>Captain</asp:ListItem>
+            <asp:ListItem>Contessa</asp:ListItem>
+            <asp:ListItem>Ambassador</asp:ListItem>
         </asp:DropDownList>
         <br />
         <br />

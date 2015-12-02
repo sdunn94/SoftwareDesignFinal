@@ -31,6 +31,51 @@ namespace FinalPro {
         protected global::System.Web.UI.WebControls.Panel Panel1;
         
         /// <summary>
+        /// PlayerOneLB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PlayerOneLB;
+        
+        /// <summary>
+        /// PlayerTwoLB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PlayerTwoLB;
+        
+        /// <summary>
+        /// PlayerThreeLB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PlayerThreeLB;
+        
+        /// <summary>
+        /// PlayerFourLB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PlayerFourLB;
+        
+        /// <summary>
+        /// PlayerFiveLB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PlayerFiveLB;
+        
+        /// <summary>
         /// ActionListBox control.
         /// </summary>
         /// <remarks>
@@ -38,15 +83,6 @@ namespace FinalPro {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox ActionListBox;
-        
-        /// <summary>
-        /// Panel2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel2;
         
         /// <summary>
         /// SwapCardsButton control.
@@ -58,22 +94,22 @@ namespace FinalPro {
         protected global::System.Web.UI.WebControls.Button SwapCardsButton;
         
         /// <summary>
-        /// AddDeckCardButton control.
+        /// AddActionButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AddDeckCardButton;
+        protected global::System.Web.UI.WebControls.Button AddActionButton;
         
         /// <summary>
-        /// RemoveDeckCardButton control.
+        /// Panel2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button RemoveDeckCardButton;
+        protected global::System.Web.UI.WebControls.Panel Panel2;
         
         /// <summary>
         /// AddDeadCardButton control.
