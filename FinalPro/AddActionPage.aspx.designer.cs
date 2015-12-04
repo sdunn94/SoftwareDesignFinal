@@ -85,22 +85,40 @@ namespace FinalPro {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// SecondPlayerDD control.
+        /// HiddenDDOne control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList SecondPlayerDD;
+        protected global::System.Web.UI.WebControls.DropDownList HiddenDDOne;
         
         /// <summary>
-        /// CardToLoseDD control.
+        /// AssassinatedPlayerLB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CardToLoseDD;
+        protected global::System.Web.UI.WebControls.Label AssassinatedPlayerLB;
+        
+        /// <summary>
+        /// HiddenDDThree control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList HiddenDDThree;
+        
+        /// <summary>
+        /// HiddenDDTwo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList HiddenDDTwo;
         
         /// <summary>
         /// SubmitButton control.
@@ -137,5 +155,23 @@ namespace FinalPro {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button NoButton;
+        
+        /// <summary>
+        /// YesButtonForAssassination control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button YesButtonForAssassination;
+        
+        /// <summary>
+        /// NoButtonForAssassination control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button NoButtonForAssassination;
     }
 }

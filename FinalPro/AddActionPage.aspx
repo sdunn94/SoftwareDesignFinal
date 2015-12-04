@@ -55,10 +55,12 @@
     </div>
         <asp:Panel ID="Panel1" runat="server" Height="211px">
             <asp:Label ID="Label1" runat="server" Text="Did someone counteract or challenge?" Visible="False"></asp:Label>
-            &nbsp;<asp:DropDownList ID="SecondPlayerDD" runat="server" Visible="False">
+            &nbsp;<asp:DropDownList ID="HiddenDDOne" runat="server" Visible="False">
             </asp:DropDownList>
-            &nbsp;
-            <asp:DropDownList ID="CardToLoseDD" runat="server" Visible="False">
+            &nbsp;<asp:Label ID="AssassinatedPlayerLB" runat="server"></asp:Label>
+&nbsp;<asp:DropDownList ID="HiddenDDThree" runat="server" Visible="False">
+            </asp:DropDownList>
+            <asp:DropDownList ID="HiddenDDTwo" runat="server" Visible="False">
             </asp:DropDownList>
             &nbsp;
             <asp:Button ID="SubmitButton" runat="server" OnClick="SubmitButton_Click" Text="Submit" Visible="False" />
@@ -67,6 +69,9 @@
             &nbsp;<asp:Button ID="ChallengeSubmitButton" runat="server" OnClick="ChallengeSubmitButton_Click" Text="Submit" Visible="False" />
             <br />
             <asp:Button ID="NoButton" runat="server" OnClick="NoButton_Click" Text="No" Visible="False" Width="37px" />
+            &nbsp;<br />
+            <asp:Button ID="YesButtonForAssassination" runat="server" OnClick="YesButtonForAssassination_Click" Text="Yes" Visible="False" />
+            &nbsp;<asp:Button ID="NoButtonForAssassination" runat="server" OnClick="NoButtonForAssassination_Click" Text="No" Visible="False" />
         </asp:Panel>
     </form>
 </body>

@@ -102,5 +102,19 @@ namespace FinalPro
                 challengedOrBlockedPlayer = value;
             }
         }
+
+        static string playerBeingAssassinated;
+
+        public static string AssassinatedPlayer
+        {
+            get
+            {
+                return playerBeingAssassinated;
+            }
+            set
+            {
+                playerBeingAssassinated = value;
+            }
+        }
     }
 }

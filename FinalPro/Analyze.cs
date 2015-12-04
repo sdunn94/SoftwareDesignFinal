@@ -10,6 +10,7 @@ namespace FinalPro
         private List<Card> cardsInHand = new List<Card>();
         private List<Card> deadCards = new List<Card>();
         private List<string> playerUsernames = new List<string>();
+        private List<int> playerCardCounts = new List<int>();
         private List<string> actions = new List<string>();
         //private List<Card> cardsKnownInDeck = new List<Card>();
 
@@ -36,6 +37,16 @@ namespace FinalPro
         public List<string> getActions()
         {
             return actions;
+        }
+
+        public List<int> getPlayerCardCounts()
+        {
+            return playerCardCounts;
+        }
+
+        public void updatePlayerCardCount(string playerUsername, int numCards)
+        {
+            playerCardCounts[getPlayerUsernames().IndexOf(playerUsername)] = numCards;
         }
 
         public void addActions(string action)

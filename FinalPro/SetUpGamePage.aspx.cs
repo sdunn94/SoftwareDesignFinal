@@ -33,27 +33,35 @@ namespace FinalPro
             {
                 numPlayers++;
                 Globals.GlobalAnalysis.addPlayerUsername(PlayerOneDD.SelectedItem.Text);
+                Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
             }
             if (PlayerTwoDD.SelectedValue != "1")
             {
                 numPlayers++;
                 Globals.GlobalAnalysis.addPlayerUsername(PlayerTwoDD.SelectedItem.Text);
+                Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
             }
             if (PlayerThreeDD.SelectedValue != "1")
             {
                 numPlayers++;
                 Globals.GlobalAnalysis.addPlayerUsername(PlayerThreeDD.SelectedItem.Text);
+                Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
             }
             if (PlayerFourDD.SelectedValue != "1")
             {
                 numPlayers++;
                 Globals.GlobalAnalysis.addPlayerUsername(PlayerFourDD.SelectedItem.Text);
+                Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
             }
             if (PlayerFiveDD.SelectedValue != "1")
             {
                 numPlayers++;
                 Globals.GlobalAnalysis.addPlayerUsername(PlayerFiveDD.SelectedItem.Text);
+                Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
             }
+
+            Globals.GlobalAnalysis.addPlayerUsername(Session["New"].ToString());
+            Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
 
             if (numPlayers > 0)
             {
@@ -69,7 +77,7 @@ namespace FinalPro
                 com.Parameters.AddWithValue("@np", numPlayers);
                 com.ExecuteNonQuery();
                 conn.Close();
-
+                //add game id to session username:gameid
                 Globals.GlobalAnalysis.addCardsToHand(CardOneDD.SelectedValue.ToString());
                 Globals.GlobalAnalysis.addCardsToHand(CardTwoDD.SelectedValue.ToString());
 

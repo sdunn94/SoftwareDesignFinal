@@ -75,16 +75,22 @@
         <asp:Button ID="AddActionButton" runat="server" OnClick="AddActionButton_Click" Text="New Action" />
         <br />
         <br />
+        Dead Cards<br />
+        Duke:
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+        <br />
+        Contessa:
+        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+        <br />
+        Captain:
+        <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+        <br />
+        Assassin:
+        <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
+        <br />
+        Ambassador:
+        <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
         </div>
-        <asp:Panel ID="Panel2" runat="server" Height="216px">
-            <br />
-            <br />
-            <br />
-            Dead Cards&nbsp;
-            <asp:Button ID="AddDeadCardButton" runat="server" Text="Add" OnClick="AddDeadCardButton_Click" />
-            &nbsp;(this will be deleted once functionality is moved)<br />
-            <br />
-        </asp:Panel>
     </form>
 </body>
 </html>
