@@ -63,7 +63,6 @@
         <asp:ListBox ID="ActionListBox" runat="server" Height="356px" Width="637px"></asp:ListBox>
                 </td>
                 <td>Your Cards
-            <asp:Button ID="SwapCardsButton" runat="server" Text="Swap" OnClick="SwapCardsButton_Click" />
                     <br />
                     <asp:Label ID="NumYourCardsLB" runat="server" Text="Label"></asp:Label>
                     <br />

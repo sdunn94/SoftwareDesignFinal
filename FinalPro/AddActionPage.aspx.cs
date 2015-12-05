@@ -926,7 +926,7 @@ namespace FinalPro
                 updateDeadCardCounters(card);
                 updateDeadCardCounters(card2);
 
-                if (p2 == id[1])
+                if (p2 == id[0])
                 {
                     Card c = new Card("Duke");
                     for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
@@ -936,7 +936,7 @@ namespace FinalPro
                     }
                     Globals.GlobalAnalysis.getCardsInHand().Remove(c);
                 }
-                else if (p3 == id[1])
+                else if (p3 == id[0])
                 {
                     Card c = new Card("Duke");
                     for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)

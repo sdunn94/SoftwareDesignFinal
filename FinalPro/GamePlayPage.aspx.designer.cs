@@ -85,15 +85,6 @@ namespace FinalPro {
         protected global::System.Web.UI.WebControls.ListBox ActionListBox;
         
         /// <summary>
-        /// SwapCardsButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SwapCardsButton;
-        
-        /// <summary>
         /// NumYourCardsLB control.
         /// </summary>
         /// <remarks>

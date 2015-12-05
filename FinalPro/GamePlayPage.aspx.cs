@@ -14,6 +14,23 @@ namespace FinalPro
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            for (int i = 0; i < Globals.GlobalAnalysis.getPlayerUsernames().Count(); i++)
+            {
+                if (Globals.GlobalAnalysis.getPlayerCardCounts()[i] == 0)
+                {
+                    Globals.GlobalAnalysis.addActions(Globals.GlobalAnalysis.getPlayerUsernames()[i] + " : removed from game");
+                    Globals.GlobalAnalysis.getPlayerUsernames().RemoveAt(i);
+                    Globals.GlobalAnalysis.getPlayerCardCounts().RemoveAt(i);
+                    i--;
+                }
+            }
+
+            //if (Globals.GlobalAnalysis.getPlayerUsernames().Count() == 1)
+            //{
+                //that player is the winner
+                //end game
+            //}
+
             string[] id = Session["New"].ToString().Split(':');
             if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 1 && Globals.GlobalAnalysis.getPlayerUsernames()[0] != id[0])
                 PlayerOneLB.Text = Globals.GlobalAnalysis.getPlayerUsernames()[0] + " " + Globals.GlobalAnalysis.getPlayerCardCounts()[0];
@@ -42,16 +59,6 @@ namespace FinalPro
             {
                 NumYourCardsLB.Text += card.getCardType() + " ";
             }
-        }
-
-        protected void SwapCardsButton_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("SwapCardsInHand.aspx");
-        }
-
-        protected void AddDeadCardButton_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("AddCard.aspx");
         }
 
         protected void AddActionButton_Click(object sender, EventArgs e)
