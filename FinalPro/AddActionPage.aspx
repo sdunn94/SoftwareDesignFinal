@@ -72,6 +72,16 @@
             &nbsp;<br />
             <asp:Button ID="YesButtonForAssassination" runat="server" OnClick="YesButtonForAssassination_Click" Text="Yes" Visible="False" />
             &nbsp;<asp:Button ID="NoButtonForAssassination" runat="server" OnClick="NoButtonForAssassination_Click" Text="No" Visible="False" />
+            <br />
+            <asp:Label ID="Label2" runat="server" Text="Label" Visible="False"></asp:Label>
+            <br />
+            <asp:Label ID="Label3" runat="server" Text="Label" Visible="False"></asp:Label>
+            &nbsp;<asp:DropDownList ID="DropDownList1" runat="server" Visible="False">
+            </asp:DropDownList>
+            <br />
+            <asp:Label ID="Label4" runat="server" Text="Label" Visible="False"></asp:Label>
+            &nbsp;<asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Yes" Visible="False" />
+            &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="No" Visible="False" />
         </asp:Panel>
     </form>
 </body>

@@ -76,8 +76,14 @@ namespace FinalPro
                 com.Parameters.AddWithValue("@id", userId);
                 com.Parameters.AddWithValue("@np", numPlayers);
                 com.ExecuteNonQuery();
+
+                string getGameId = "SELECT MAX(Id) FROM GameDataTable";
+                com = new SqlCommand(getGameId, conn);
+                int gameId = Convert.ToInt32(com.ExecuteScalar().ToString());
                 conn.Close();
                 //add game id to session username:gameid
+                Session["New"] = Session["New"].ToString() + ":" + gameId.ToString();
+
                 Globals.GlobalAnalysis.addCardsToHand(CardOneDD.SelectedValue.ToString());
                 Globals.GlobalAnalysis.addCardsToHand(CardTwoDD.SelectedValue.ToString());
 

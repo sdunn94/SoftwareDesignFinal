@@ -14,15 +14,16 @@ namespace FinalPro
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 1 && Globals.GlobalAnalysis.getPlayerUsernames()[0] != Session["New"].ToString())
+            string[] id = Session["New"].ToString().Split(':');
+            if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 1 && Globals.GlobalAnalysis.getPlayerUsernames()[0] != id[0])
                 PlayerOneLB.Text = Globals.GlobalAnalysis.getPlayerUsernames()[0] + " " + Globals.GlobalAnalysis.getPlayerCardCounts()[0];
-            if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 2 && Globals.GlobalAnalysis.getPlayerUsernames()[1] != Session["New"].ToString())
+            if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 2 && Globals.GlobalAnalysis.getPlayerUsernames()[1] != id[0])
                 PlayerTwoLB.Text = Globals.GlobalAnalysis.getPlayerUsernames()[1] + " " + Globals.GlobalAnalysis.getPlayerCardCounts()[1];
-            if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 3 && Globals.GlobalAnalysis.getPlayerUsernames()[2] != Session["New"].ToString())
+            if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 3 && Globals.GlobalAnalysis.getPlayerUsernames()[2] != id[0])
                 PlayerThreeLB.Text = Globals.GlobalAnalysis.getPlayerUsernames()[2] + " " + Globals.GlobalAnalysis.getPlayerCardCounts()[2];
-            if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 4 && Globals.GlobalAnalysis.getPlayerUsernames()[3] != Session["New"].ToString())
+            if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 4 && Globals.GlobalAnalysis.getPlayerUsernames()[3] != id[0])
                 PlayerFourLB.Text = Globals.GlobalAnalysis.getPlayerUsernames()[3] + " " + Globals.GlobalAnalysis.getPlayerCardCounts()[3];
-            if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 5 && Globals.GlobalAnalysis.getPlayerUsernames()[4] != Session["New"].ToString())
+            if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 5 && Globals.GlobalAnalysis.getPlayerUsernames()[4] != id[0])
                 PlayerFiveLB.Text = Globals.GlobalAnalysis.getPlayerUsernames()[4] + " " + Globals.GlobalAnalysis.getPlayerCardCounts()[4];
 
             ActionListBox.Items.Clear();

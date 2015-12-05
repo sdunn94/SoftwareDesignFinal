@@ -116,5 +116,34 @@ namespace FinalPro
                 playerBeingAssassinated = value;
             }
         }
+
+        static string playerAssassinating;
+
+        public static string PlayerAssassinating
+        {
+            get
+            {
+                return playerAssassinating;
+            }
+            set
+            {
+                playerAssassinating = value;
+            }
+        }
+
+        static string playerBlockingAssassination;
+
+        public static string PlayerBlockingAssassination
+        {
+            get
+            {
+                return playerBlockingAssassination;
+            }
+            set
+            {
+                playerBlockingAssassination = value;
+            }
+        }
+        
     }
 }

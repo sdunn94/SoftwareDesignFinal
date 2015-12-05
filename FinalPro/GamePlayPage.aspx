@@ -12,6 +12,9 @@
         .auto-style2 {
             width: 639px;
         }
+        .auto-style3 {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -68,14 +71,7 @@
                     <br />
                     <br />
                     <br />
-                    Dead Cards</td>
-            </tr>
-        </table>
-        <br />
-        <asp:Button ID="AddActionButton" runat="server" OnClick="AddActionButton_Click" Text="New Action" />
-        <br />
-        <br />
-        Dead Cards<br />
+                    <span class="auto-style3"><strong>Dead Cards</strong></span><br />
         Duke:
         <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
         <br />
@@ -90,6 +86,12 @@
         <br />
         Ambassador:
         <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <asp:Button ID="AddActionButton" runat="server" OnClick="AddActionButton_Click" Text="New Action" />
+        <br />
         </div>
     </form>
 </body>
