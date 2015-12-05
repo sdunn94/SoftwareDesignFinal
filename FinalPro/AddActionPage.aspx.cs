@@ -959,8 +959,7 @@ namespace FinalPro
                 insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
 
                 Globals.GlobalAnalysis.addActions(p4 + ": Lost the " + card);
-                Globals.GlobalAnalysis.addActions(Globals.CorBPlayer + ": Gets new card");
-
+                
                 updateDeadCardCounters(card);
                 if (p1[0] == id[0]) //lose a card
                 {
@@ -993,6 +992,7 @@ namespace FinalPro
                 }
                 else
                 {
+                    Globals.GlobalAnalysis.addActions(Globals.CorBPlayer + ": Gets new card");
                     Response.Redirect("GamePlayPage.aspx");
                 }
             }

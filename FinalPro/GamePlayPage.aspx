@@ -65,6 +65,7 @@
                 <td>Your Cards
             <asp:Button ID="SwapCardsButton" runat="server" Text="Swap" OnClick="SwapCardsButton_Click" />
                     <br />
+                    <asp:Label ID="NumYourCardsLB" runat="server" Text="Label"></asp:Label>
                     <br />
                     <br />
                     <br />

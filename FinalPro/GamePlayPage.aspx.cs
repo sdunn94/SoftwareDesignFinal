@@ -37,6 +37,11 @@ namespace FinalPro
             Label3.Text = Globals.CaptainCounter.ToString();
             Label4.Text = Globals.AssassinCounter.ToString();
             Label5.Text = Globals.AmbassadorCounter.ToString();
+            NumYourCardsLB.Text = "";
+            foreach(Card card in Globals.GlobalAnalysis.getCardsInHand())
+            {
+                NumYourCardsLB.Text += card.getCardType() + " ";
+            }
         }
 
         protected void SwapCardsButton_Click(object sender, EventArgs e)
