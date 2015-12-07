@@ -4,14 +4,24 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <link href="StyleSheetTest.css" rel="stylesheet" />
     <title></title>
+    <style type="text/css">
+        .auto-style1 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
+    <div class="auto-style1">
+    
+        <div class="auto-style1">
     
         Set Up New Game<br />
+        </div>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:RegistrationConnectionString %>" SelectCommand="SELECT * FROM [UserDataTable]"></asp:SqlDataSource>
+        <div class="auto-style1">
         <br />
         Players<br />
         <asp:DropDownList ID="PlayerOneDD" runat="server" DataSourceID="SqlDataSource1" DataTextField="Username" DataValueField="Id">
@@ -30,7 +40,7 @@
         </asp:DropDownList>
         <br />
         <br />
-        <asp:Button ID="AddNewPlayerButton" runat="server" Text="Add New Player" OnClick="AddNewPlayerButton_Click" />
+        <asp:Button ID="AddNewPlayerButton" class="button" runat="server" Text="Add New Player" OnClick="AddNewPlayerButton_Click" />
         <br />
         <br />
         Your Cards<br />
@@ -53,7 +63,9 @@
         </asp:DropDownList>
         <br />
         <br />
-        <asp:Button ID="Button2" runat="server" Text="Start Game" OnClick="StartGameButton_Click" />
+        <asp:Button ID="Button2" class="button" runat="server" Text="Start Game" OnClick="StartGameButton_Click" />
+    
+        </div>
     
     </div>
     </form>
