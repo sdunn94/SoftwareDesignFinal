@@ -4,6 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <link href="StyleSheetTest.css" rel="stylesheet" />
     <title></title>
     <style type="text/css">
         .auto-style1 {
@@ -15,11 +16,14 @@
         .auto-style3 {
             text-decoration: underline;
         }
+        #form1 {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
+    <div style="text-align: center">
     
         <asp:Panel ID="Panel1" runat="server" Height="143px">
             Player Probabilities<br />
@@ -62,7 +66,7 @@
                 <td class="auto-style2">Actions                 <br />
         <asp:ListBox ID="ActionListBox" runat="server" Height="356px" Width="637px"></asp:ListBox>
                 </td>
-                <td>Your Cards
+                <td style="text-align: center">Your Cards
                     <br />
                     <asp:Label ID="NumYourCardsLB" runat="server" Text="Label"></asp:Label>
                     <br />
@@ -90,13 +94,13 @@
             </tr>
         </table>
         <br />
-        <asp:Button ID="AddActionButton" runat="server" OnClick="AddActionButton_Click" Text="New Action" />
+        <asp:Button ID="AddActionButton" class="button" runat="server" OnClick="AddActionButton_Click" Text="New Action" />
         <br />
         <br />
         </div>
         <asp:Label ID="Label6" runat="server" Text="Label" Visible="False"></asp:Label>
 &nbsp;
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Go To Main Menu" Visible="False" />
+        <asp:Button ID="Button1" class="button" runat="server" OnClick="Button1_Click" Text="Go To Main Menu" Visible="False" />
     </form>
 </body>
 </html>
