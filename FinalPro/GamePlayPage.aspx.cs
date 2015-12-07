@@ -25,13 +25,24 @@ namespace FinalPro
                 }
             }
 
-            //if (Globals.GlobalAnalysis.getPlayerUsernames().Count() == 1)
-            //{
-                //that player is the winner
-                //end game
-            //}
-
             string[] id = Session["New"].ToString().Split(':');
+
+            if (Globals.GlobalAnalysis.getPlayerUsernames().Count() == 1)
+            {
+                //that player is the winner
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
+                conn.Open();
+                string updateWinner = "UPDATE GameDataTable SET winner = '" + Globals.GlobalAnalysis.getPlayerUsernames()[0] + "' WHERE Id = '" + Int32.Parse(id[1]) + "';";
+                SqlCommand com = new SqlCommand(updateWinner, conn);
+                com.ExecuteNonQuery();
+                conn.Close();
+                //end game
+                AddActionButton.Enabled = false;
+                Label6.Visible = true;
+                Label6.Text = "The Game is Over and the winner is: " + Globals.GlobalAnalysis.getPlayerUsernames()[0];
+                Button1.Visible = true;
+            }
+
             if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 1 && Globals.GlobalAnalysis.getPlayerUsernames()[0] != id[0])
                 PlayerOneLB.Text = Globals.GlobalAnalysis.getPlayerUsernames()[0] + " " + Globals.GlobalAnalysis.getPlayerCardCounts()[0];
             if (Globals.GlobalAnalysis.getPlayerUsernames().Count >= 2 && Globals.GlobalAnalysis.getPlayerUsernames()[1] != id[0])
@@ -64,6 +75,11 @@ namespace FinalPro
         protected void AddActionButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("AddActionPage.aspx");
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("MainMenuPage.aspx");
         }
     }
 }

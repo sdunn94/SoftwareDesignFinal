@@ -92,7 +92,11 @@
         <br />
         <asp:Button ID="AddActionButton" runat="server" OnClick="AddActionButton_Click" Text="New Action" />
         <br />
+        <br />
         </div>
+        <asp:Label ID="Label6" runat="server" Text="Label" Visible="False"></asp:Label>
+&nbsp;
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Go To Main Menu" Visible="False" />
     </form>
 </body>
 </html>
