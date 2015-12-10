@@ -46,11 +46,21 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
+                    <td>
+                        <asp:Label ID="PotentialCards1" runat="server"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:Label ID="PotentialCards2" runat="server"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:Label ID="PotentialCards3" runat="server"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:Label ID="PotentialCards4" runat="server"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:Label ID="PotentialCards5" runat="server"></asp:Label>
+                    </td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
@@ -60,6 +70,8 @@
                     <td>&nbsp;</td>
                 </tr>
             </table>
+            <br />
+            <asp:Label ID="StatsLabel" runat="server"></asp:Label>
         </asp:Panel>
         <table class="auto-style1">
             <tr>

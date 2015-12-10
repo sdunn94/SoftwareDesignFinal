@@ -75,6 +75,7 @@
     <Content Include="LoginPage.aspx" />
     <Content Include="RegistrationPage.aspx" />
     <Content Include="SetUpGamePage.aspx" />
+    <Content Include="StyleSheetTest.css" />
     <Content Include="Web.config" />
     <Content Include="MainMenuPage.aspx" />
   </ItemGroup>

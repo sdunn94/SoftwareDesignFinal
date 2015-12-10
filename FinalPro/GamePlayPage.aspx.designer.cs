@@ -76,6 +76,60 @@ namespace FinalPro {
         protected global::System.Web.UI.WebControls.Label PlayerFiveLB;
         
         /// <summary>
+        /// PotentialCards1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PotentialCards1;
+        
+        /// <summary>
+        /// PotentialCards2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PotentialCards2;
+        
+        /// <summary>
+        /// PotentialCards3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PotentialCards3;
+        
+        /// <summary>
+        /// PotentialCards4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PotentialCards4;
+        
+        /// <summary>
+        /// PotentialCards5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PotentialCards5;
+        
+        /// <summary>
+        /// StatsLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label StatsLabel;
+        
+        /// <summary>
         /// ActionListBox control.
         /// </summary>
         /// <remarks>

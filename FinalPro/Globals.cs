@@ -144,6 +144,33 @@ namespace FinalPro
                 playerBlockingAssassination = value;
             }
         }
-        
+
+        static string challengeStatus;
+
+        public static string ChallengeStatus
+        {
+            get
+            {
+                return challengeStatus;
+            }
+            set
+            {
+                challengeStatus = value;
+            }
+        }
+
+        static float stats;
+
+        public static float Stats
+        {
+            get
+            {
+                return stats;
+            }
+            set
+            {
+                stats = value;
+            }
+        }
     }
 }

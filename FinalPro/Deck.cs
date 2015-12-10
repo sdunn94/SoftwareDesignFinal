@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Security.Cryptography;
 
 namespace FinalPro
 {
     public class Deck
     {
         private List <Card> cards = new List <Card>();
-
+        
         public Deck()
         {
             for(int i = 0; i < 3; i++)
             {
-                cards.Add(new Card("Duke"));
                 cards.Add(new Card("Assassin"));
                 cards.Add(new Card("Contessa"));
-                cards.Add(new Card("Captian"));
+                cards.Add(new Card("Duke"));
+                cards.Add(new Card("Captain"));
                 cards.Add(new Card("Ambassador"));
             }
         }
@@ -28,15 +29,34 @@ namespace FinalPro
 
         public void shuffle()
         {
-            for(int i = 0; i < 15; i++)
+            RNGCryptoServiceProvider random = new RNGCryptoServiceProvider();
+            Card[] templist = cards.OrderBy(x => GetNextInt32(random)).ToArray();
+            int i = 0;
+            foreach(Card c in templist)
             {
-                Random rnd = new Random();
-                int randIndex = rnd.Next(15);
-
-                Card temp = cards[i];
-                cards[i] = cards[randIndex];
-                cards[randIndex] = temp;
+                cards[i] = c;
+                i++;
             }
         }
+
+        private int GetNextInt32(RNGCryptoServiceProvider rnd)
+        {
+            byte[] randomInt = new byte[4];
+            rnd.GetBytes(randomInt);
+            return Convert.ToInt32(randomInt[0]);
+        }
+
+        public void dealHand(List<Card> hand)
+        {
+            if (cards.Count >= 2)
+            {
+                hand.Add(cards[0]);
+                hand.Add(cards[1]);
+
+                cards.RemoveAt(0);
+                cards.RemoveAt(0);
+            }
+        }
+
     }
 }

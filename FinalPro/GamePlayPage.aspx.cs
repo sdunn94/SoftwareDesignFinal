@@ -70,6 +70,44 @@ namespace FinalPro
             {
                 NumYourCardsLB.Text += card.getCardType() + " ";
             }
+
+            StatsLabel.Text = "Chance that everyone is telling the truth: " + Globals.Stats.ToString() + "%";
+
+            if(Globals.GlobalAnalysis.getPlayerUsernames().Count > 0)
+            {
+                for(int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[0]).Count; i++)
+                {
+                    PotentialCards1.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[0])[i].T + " ";
+                }
+            }
+            if (Globals.GlobalAnalysis.getPlayerUsernames().Count > 1)
+            {
+                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[1]).Count; i++)
+                {
+                    PotentialCards2.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[1])[i].T + " ";
+                }
+            }
+            if (Globals.GlobalAnalysis.getPlayerUsernames().Count > 2)
+            {
+                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[2]).Count; i++)
+                {
+                    PotentialCards3.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[2])[i].T + " ";
+                }
+            }
+            if (Globals.GlobalAnalysis.getPlayerUsernames().Count > 3)
+            {
+                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[3]).Count; i++)
+                {
+                    PotentialCards4.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[3])[i].T + " ";
+                }
+            }
+            if (Globals.GlobalAnalysis.getPlayerUsernames().Count > 4)
+            {
+                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[4]).Count; i++)
+                {
+                    PotentialCards5.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[4])[i].T + " ";
+                }
+            }
         }
 
         protected void AddActionButton_Click(object sender, EventArgs e)
