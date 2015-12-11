@@ -146,12 +146,33 @@ namespace FinalPro
                 for (int i = 0; i < playerUsernames.Count; i++) //only deal one card if corresponding user only has one card.
                 {
                     List<Card> tempHand = new List<Card>();
-                    deck.dealHand(tempHand);
-                    //translate to a list of strings
                     List<string> stringHand = new List<string>();
-                    stringHand.Add(tempHand[0].getCardType());
-                    stringHand.Add(tempHand[1].getCardType());
-                    hands.Add(stringHand);
+                    if(playerCardCounts[i] == 0)
+                    {
+                        deck.dealHand(tempHand, 2); //doing 2 here cause if player has no cards the will automatically by marked as true so it won't mess up the numbers
+                        //translate to a list of strings
+
+                        stringHand.Add(tempHand[0].getCardType());
+                        stringHand.Add(tempHand[1].getCardType());
+                        hands.Add(stringHand);
+                    }
+                    else if(playerCardCounts[i] == 1)
+                    {
+                        deck.dealHand(tempHand, 1);
+                        //translate to a list of strings
+
+                        stringHand.Add(tempHand[0].getCardType());
+                        hands.Add(stringHand);
+                    }
+                    else if (playerCardCounts[i] == 2)
+                    {
+                        deck.dealHand(tempHand, 2);
+                        //translate to a list of strings
+                        
+                        stringHand.Add(tempHand[0].getCardType());
+                        stringHand.Add(tempHand[1].getCardType());
+                        hands.Add(stringHand);
+                    }
                 }
                  
                 if(checkIfCardsMatch(hands))

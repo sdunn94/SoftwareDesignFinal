@@ -334,6 +334,8 @@ namespace FinalPro
                 }
 
                 SubmitButton.Visible = true;
+                YesButton.Visible = false;
+                NoButton.Visible = false;
             }
             else if(ActionDD.SelectedItem.Text == "Assassinate")
             {
@@ -343,7 +345,6 @@ namespace FinalPro
                 HiddenDDOne.Visible = true;
                 HiddenDDOne.Items.Clear();
                 HiddenDDOne.Items.Add("Select Player");
-                HiddenDDOne.Items.Add(id[0]);
                 foreach (string username in Globals.GlobalAnalysis.getPlayerUsernames())
                 {
                     HiddenDDOne.Items.Add(username);
@@ -354,6 +355,8 @@ namespace FinalPro
                 populateCardsLeftDropDownList(HiddenDDTwo); //possibly filter to your cards if you are the one being assassinated
                 
                 SubmitButton.Visible = true;
+                YesButton.Visible = false;
+                NoButton.Visible = false;
             }
             else if(ActionDD.SelectedItem.Text == "Challenge Tax" || ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid"
                 || ActionDD.SelectedItem.Text == "Challenge Exchange" || ActionDD.SelectedItem.Text == "Challenge Block Stealing"

@@ -58,5 +58,10 @@ namespace FinalPro
             ListBox2.Visible = true;
             ListBox3.Visible = true;
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("MainMenuPage.aspx");
+        }
     }
 }

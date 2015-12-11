@@ -36,7 +36,7 @@
         </asp:SqlDataSource>
         <br />
         <br />
-        <asp:Button ID="Button1" runat="server" Text="Return To Main Menu" />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Return To Main Menu" />
     
     </div>
     </form>

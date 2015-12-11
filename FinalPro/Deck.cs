@@ -46,15 +46,24 @@ namespace FinalPro
             return Convert.ToInt32(randomInt[0]);
         }
 
-        public void dealHand(List<Card> hand)
+        public void dealHand(List<Card> hand, int numCards)
         {
             if (cards.Count >= 2)
             {
-                hand.Add(cards[0]);
-                hand.Add(cards[1]);
+                if (numCards == 2)
+                {
+                    hand.Add(cards[0]);
+                    hand.Add(cards[1]);
 
-                cards.RemoveAt(0);
-                cards.RemoveAt(0);
+                    cards.RemoveAt(0);
+                    cards.RemoveAt(0);
+                }
+                else if(numCards == 1)
+                {
+                    hand.Add(cards[0]);
+
+                    cards.RemoveAt(0);
+                }
             }
         }
 

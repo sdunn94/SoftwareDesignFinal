@@ -75,37 +75,52 @@ namespace FinalPro
 
             if(Globals.GlobalAnalysis.getPlayerUsernames().Count > 0)
             {
-                for(int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[0]).Count; i++)
+                if (Globals.GlobalAnalysis.getPlayerUsernames()[0] != id[0])
                 {
-                    PotentialCards1.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[0])[i].T + " ";
+                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[0]).Count; i++)
+                    {
+                        PotentialCards1.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[0])[i].T + " ";
+                    }
                 }
             }
             if (Globals.GlobalAnalysis.getPlayerUsernames().Count > 1)
             {
-                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[1]).Count; i++)
+                if (Globals.GlobalAnalysis.getPlayerUsernames()[1] != id[0])
                 {
-                    PotentialCards2.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[1])[i].T + " ";
+                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[1]).Count; i++)
+                    {
+                        PotentialCards2.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[1])[i].T + " ";
+                    }
                 }
             }
             if (Globals.GlobalAnalysis.getPlayerUsernames().Count > 2)
             {
-                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[2]).Count; i++)
+                if (Globals.GlobalAnalysis.getPlayerUsernames()[2] != id[0])
                 {
-                    PotentialCards3.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[2])[i].T + " ";
+                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[2]).Count; i++)
+                    {
+                        PotentialCards3.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[2])[i].T + " ";
+                    }
                 }
             }
             if (Globals.GlobalAnalysis.getPlayerUsernames().Count > 3)
             {
-                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[3]).Count; i++)
+                if (Globals.GlobalAnalysis.getPlayerUsernames()[3] != id[0])
                 {
-                    PotentialCards4.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[3])[i].T + " ";
+                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[3]).Count; i++)
+                    {
+                        PotentialCards4.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[3])[i].T + " ";
+                    }
                 }
             }
             if (Globals.GlobalAnalysis.getPlayerUsernames().Count > 4)
             {
-                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[4]).Count; i++)
+                if (Globals.GlobalAnalysis.getPlayerUsernames()[3] != id[0])
                 {
-                    PotentialCards5.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[4])[i].T + " ";
+                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[4]).Count; i++)
+                    {
+                        PotentialCards5.Text += Globals.GlobalAnalysis.getPossibleCard(Globals.GlobalAnalysis.getPlayerUsernames()[4])[i].T + " ";
+                    }
                 }
             }
         }
