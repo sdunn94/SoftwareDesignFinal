@@ -616,7 +616,7 @@ namespace FinalPro
                         }
                         Globals.GlobalAnalysis.getCardsInHand().Remove(c);
                     }
-                    if (ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.CorBPlayer == id[0])
+                    if (ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.CorBPlayer == id[0] && Globals.ChallengeStatus == "Lost")
                     {
                         string cardToRemove = "";
                         if (ActionDD.SelectedItem.Text == "Challenge Tax")
@@ -694,8 +694,8 @@ namespace FinalPro
 
         private void handleChallengeAssassinate()
         {
-            int index = Globals.AssassinatedPlayer.IndexOf(':');
-            string playerUsername = Globals.AssassinatedPlayer.Substring(0, index);
+            //int index = Globals.AssassinatedPlayer.IndexOf(':');
+            string playerUsername = Globals.AssassinatedPlayer;
             string[] id = Session["New"].ToString().Split(':');
             
             //if the challenger lost and the challenger was the one being assassinated, and if they have two cards they lose both otherwise they lose the one

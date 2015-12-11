@@ -15,6 +15,8 @@ namespace FinalPro
         {
             if(Session["New"] != null)
             {
+                string[] id = Session["New"].ToString().Split(':');
+                Session["New"] = id[0];
                 Label1.Text = "Welcome " + Session["New"].ToString();
             }
             else
