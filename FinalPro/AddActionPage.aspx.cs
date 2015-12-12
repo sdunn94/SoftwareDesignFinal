@@ -319,6 +319,7 @@ namespace FinalPro
             }
             else if (ActionDD.SelectedItem.Text == "Exchange" && PlayerDD.SelectedItem.Text == id[0])
             {
+                Label1.Text = "What are your new Cards?";
                 HiddenDDOne.Visible = true;
                 HiddenDDOne.Items.Clear();
                 if(Globals.DukeCounter < 3)
@@ -708,11 +709,14 @@ namespace FinalPro
         private bool isCardInHand(string p)
         {
             bool retVal = false;
-            foreach(Card c in Globals.GlobalAnalysis.getCardsInHand())
+            if (Globals.GlobalAnalysis.getCardsInHand().Count > 0)
             {
-                if(c.getCardType() == p)
+                foreach (Card c in Globals.GlobalAnalysis.getCardsInHand())
                 {
-                    retVal = true;
+                    if (c.getCardType() == p)
+                    {
+                        retVal = true;
+                    }
                 }
             }
             return retVal;
@@ -916,9 +920,16 @@ namespace FinalPro
 
         private bool isBothCardsInHand(string p1, string p2)
         {
-            if((Globals.GlobalAnalysis.getCardsInHand()[0].getCardType() == p1 && Globals.GlobalAnalysis.getCardsInHand()[1].getCardType() == p2) || (Globals.GlobalAnalysis.getCardsInHand()[0].getCardType() == p2 && Globals.GlobalAnalysis.getCardsInHand()[1].getCardType() == p1))
+            if (Globals.GlobalAnalysis.getCardsInHand().Count > 1)
             {
-                return true;
+                if ((Globals.GlobalAnalysis.getCardsInHand()[0].getCardType() == p1 && Globals.GlobalAnalysis.getCardsInHand()[1].getCardType() == p2) || (Globals.GlobalAnalysis.getCardsInHand()[0].getCardType() == p2 && Globals.GlobalAnalysis.getCardsInHand()[1].getCardType() == p1))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
