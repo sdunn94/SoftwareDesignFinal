@@ -267,6 +267,7 @@ namespace FinalPro
         protected void YesButton_Click(object sender, EventArgs e)
         {
             Globals.ChallengeStatus = "Won";
+            string[] id = Session["New"].ToString().Split(':');
             if (ActionDD.SelectedItem.Text == "Challenge Tax" || ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid"
                 || ActionDD.SelectedItem.Text == "Challenge Exchange" || ActionDD.SelectedItem.Text == "Challenge Assassinate"
                 || ActionDD.SelectedItem.Text == "Challenge Block Stealing" || ActionDD.SelectedItem.Text == "Challenge Stealing")
@@ -282,7 +283,17 @@ namespace FinalPro
 
                 HiddenDDTwo.Visible = true;
                 HiddenDDTwo.Items.Clear();
-                populateCardsLeftDropDownList(HiddenDDTwo);
+                if (Globals.CorBPlayer == id[0])
+                {
+                    foreach(Card c in Globals.GlobalAnalysis.getCardsInHand())
+                    {
+                        HiddenDDTwo.Items.Add(c.getCardType());
+                    }
+                }
+                else
+                {
+                    populateCardsLeftDropDownList(HiddenDDTwo);
+                }
 
                 SubmitButton.Visible = true;
                 YesButton.Visible = false;
@@ -355,6 +366,7 @@ namespace FinalPro
 
                 HiddenDDTwo.Visible = true;
                 HiddenDDTwo.Items.Clear();
+
                 populateCardsLeftDropDownList(HiddenDDTwo); //possibly filter to your cards if you are the one being assassinated
                 
                 SubmitButton.Visible = true;
@@ -534,6 +546,7 @@ namespace FinalPro
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
             string[] id = Session["New"].ToString().Split(':');
+            ErrorLabel.Visible = false;
             if (ActionDD.SelectedItem.Text == "Coup" || ActionDD.SelectedItem.Text == "Assassinate" || ActionDD.SelectedItem.Text.Contains("Challenge"))
             {
                 if(ActionDD.SelectedItem.Text == "Challenge Assassinate" && Globals.ChallengeStatus == "Lost")
@@ -546,114 +559,122 @@ namespace FinalPro
                 }
                 else 
                 {
-                    string card = HiddenDDTwo.SelectedItem.Text;
-                    string playerUsername = HiddenDDOne.SelectedItem.Text.ToString();
-                    Globals.GlobalAnalysis.updatePlayerCardCount(playerUsername, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(playerUsername)] - 1);
-                    //if new number of cards is zero do something to kick them out of the game
-
-                    int playerId = getUserId(playerUsername);
-                    insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
-          
-                    Globals.GlobalAnalysis.addActions(playerUsername + ": Lost the " + card);
-
-                    if(ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.ChallengeStatus == "Lost" && Globals.CorBPlayer != id[0])
+                    if (HiddenDDOne.SelectedItem.Text == id[0] && isCardInHand(HiddenDDTwo.SelectedItem.Text) || HiddenDDOne.SelectedItem.Text != id[0])
                     {
-                        Globals.GlobalAnalysis.addActions(Globals.CorBPlayer + ": Gets new card");
-                    }
+                        string card = HiddenDDTwo.SelectedItem.Text;
+                        string playerUsername = HiddenDDOne.SelectedItem.Text.ToString();
+                        Globals.GlobalAnalysis.updatePlayerCardCount(playerUsername, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(playerUsername)] - 1);
+                        //if new number of cards is zero do something to kick them out of the game
 
-                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(playerUsername).Count; i++)
-                    {
-                        if(Globals.GlobalAnalysis.getPossibleCard(playerUsername)[i].T == card)
+                        int playerId = getUserId(playerUsername);
+                        insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
+
+                        Globals.GlobalAnalysis.addActions(playerUsername + ": Lost the " + card);
+
+                        if (ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.ChallengeStatus == "Lost" && Globals.CorBPlayer != id[0])
                         {
-                            Globals.GlobalAnalysis.getPossibleCard(playerUsername).RemoveAt(i);
-                            break;
+                            Globals.GlobalAnalysis.addActions(Globals.CorBPlayer + ": Gets new card");
                         }
-                    }
 
-                    if(ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.ChallengeStatus == "Lost")
-                    {
-                        for(int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).Count; i++)
+                        for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(playerUsername).Count; i++)
                         {
-                            if (ActionDD.SelectedItem.Text == "Challenge Tax" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Duke")
+                            if (Globals.GlobalAnalysis.getPossibleCard(playerUsername)[i].T == card)
                             {
-                                Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
+                                Globals.GlobalAnalysis.getPossibleCard(playerUsername).RemoveAt(i);
                                 break;
                             }
-                            else if (ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Duke")
+                        }
+
+                        if (ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.ChallengeStatus == "Lost")
+                        {
+                            for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).Count; i++)
                             {
-                                Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
-                                break;
-                            }
-                            else if (ActionDD.SelectedItem.Text == "Challenge Stealing" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Captain")
-                            {
-                                Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
-                                break;
-                            }
-                            else if (ActionDD.SelectedItem.Text == "Challenge Exchange")
-                            {
-                                Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).Clear();
-                                break;
-                            }
-                            else if (ActionDD.SelectedItem.Text == "Challenge Block Stealing")
-                            {
-                                if (Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Captain" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].B)
+                                if (ActionDD.SelectedItem.Text == "Challenge Tax" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Duke")
                                 {
-                                    Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i); //remove captain
-                                    Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i); //remove ambassador both of which were added becuase the player blocked a steal
+                                    Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
                                     break;
+                                }
+                                else if (ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Duke")
+                                {
+                                    Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
+                                    break;
+                                }
+                                else if (ActionDD.SelectedItem.Text == "Challenge Stealing" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Captain")
+                                {
+                                    Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
+                                    break;
+                                }
+                                else if (ActionDD.SelectedItem.Text == "Challenge Exchange")
+                                {
+                                    Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).Clear();
+                                    break;
+                                }
+                                else if (ActionDD.SelectedItem.Text == "Challenge Block Stealing")
+                                {
+                                    if (Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Captain" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].B)
+                                    {
+                                        Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i); //remove captain
+                                        Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i); //remove ambassador both of which were added becuase the player blocked a steal
+                                        break;
+                                    }
                                 }
                             }
                         }
-                    }
-                    Globals.GlobalAnalysis.calculateStatistics();
+                        Globals.GlobalAnalysis.calculateStatistics();
 
-                    updateDeadCardCounters(card);
+                        updateDeadCardCounters(card);
 
-                    if (HiddenDDOne.SelectedItem.Text == id[0])
-                    {
-                        Card c = new Card("Duke");
-                        for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                        if (HiddenDDOne.SelectedItem.Text == id[0])
                         {
-                            if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == HiddenDDTwo.SelectedItem.Text)
-                                c = Globals.GlobalAnalysis.getCardsInHand()[i];
+                            Card c = new Card("Duke");
+                            for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                            {
+                                if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == HiddenDDTwo.SelectedItem.Text)
+                                    c = Globals.GlobalAnalysis.getCardsInHand()[i];
+                            }
+                            Globals.GlobalAnalysis.getCardsInHand().Remove(c);
                         }
-                        Globals.GlobalAnalysis.getCardsInHand().Remove(c);
-                    }
-                    if (ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.CorBPlayer == id[0] && Globals.ChallengeStatus == "Lost")
-                    {
-                        string cardToRemove = "";
-                        if (ActionDD.SelectedItem.Text == "Challenge Tax")
-                            cardToRemove = "Duke";
-                        else if (ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid")
-                            cardToRemove = "Duke";
-                        else if (ActionDD.SelectedItem.Text == "Challenge Exchange")
-                            cardToRemove = "Ambassador";
-                        //else if (ActionDD.SelectedItem.Text == "Challenge Block Stealing")
-                        //either lose Ambassador or Captain
-                        else if (ActionDD.SelectedItem.Text == "Challenge Stealing")
-                            cardToRemove = "Captain";
-                        else if (ActionDD.SelectedItem.Text == "Challenge Assassinate")
-                            cardToRemove = "Assassin";
-
-                        for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                        if (ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.CorBPlayer == id[0] && Globals.ChallengeStatus == "Lost")
                         {
-                            if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == cardToRemove)
-                                Globals.GlobalAnalysis.getCardsInHand().RemoveAt(i);
+                            string cardToRemove = "";
+                            if (ActionDD.SelectedItem.Text == "Challenge Tax")
+                                cardToRemove = "Duke";
+                            else if (ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid")
+                                cardToRemove = "Duke";
+                            else if (ActionDD.SelectedItem.Text == "Challenge Exchange")
+                                cardToRemove = "Ambassador";
+                            //else if (ActionDD.SelectedItem.Text == "Challenge Block Stealing")
+                            //either lose Ambassador or Captain
+                            else if (ActionDD.SelectedItem.Text == "Challenge Stealing")
+                                cardToRemove = "Captain";
+                            else if (ActionDD.SelectedItem.Text == "Challenge Assassinate")
+                                cardToRemove = "Assassin";
+
+                            for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                            {
+                                if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == cardToRemove)
+                                    Globals.GlobalAnalysis.getCardsInHand().RemoveAt(i);
+                            }
+
+                            Label1.Text = "What is your new card?";
+                            HiddenDDOne.Visible = true;
+                            HiddenDDTwo.Visible = false;
+                            SubmitButton.Visible = false;
+
+                            HiddenDDOne.Items.Clear();
+                            populateCardsLeftDropDownList(HiddenDDOne);
+
+                            ChallengeSubmitButton.Visible = true;
                         }
-
-                        Label1.Text = "What is your new card?";
-                        HiddenDDOne.Visible = true;
-                        HiddenDDTwo.Visible = false;
-                        SubmitButton.Visible = false;
-
-                        HiddenDDOne.Items.Clear();
-                        populateCardsLeftDropDownList(HiddenDDOne);
-
-                        ChallengeSubmitButton.Visible = true;
+                        else
+                        {
+                            Response.Redirect("GamePlayPage.aspx");
+                        }
                     }
-                    else 
+                    else
                     {
-                        Response.Redirect("GamePlayPage.aspx");
+                        ErrorLabel.Visible = true;
+                        ErrorLabel.Text = "That Card is not in your hand!";
                     }
                 }
             }
@@ -666,6 +687,19 @@ namespace FinalPro
 
                 Response.Redirect("GamePlayPage.aspx");
             }
+        }
+
+        private bool isCardInHand(string p)
+        {
+            bool retVal = false;
+            foreach(Card c in Globals.GlobalAnalysis.getCardsInHand())
+            {
+                if(c.getCardType() == p)
+                {
+                    retVal = true;
+                }
+            }
+            return retVal;
         }
 
         protected void ChallengeSubmitButton_Click(object sender, EventArgs e)
@@ -700,48 +734,68 @@ namespace FinalPro
             //int index = Globals.AssassinatedPlayer.IndexOf(':');
             string playerUsername = Globals.AssassinatedPlayer;
             string[] id = Session["New"].ToString().Split(':');
-            
+            bool isError = false;
             //if the challenger lost and the challenger was the one being assassinated, and if they have two cards they lose both otherwise they lose the one
             if (playerUsername == PlayerDD.SelectedItem.Text)  
             {
                 if(Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(playerUsername)] == 2) //if they have two cards
                 {
-                    string card = HiddenDDOne.SelectedItem.Text;
-                    string card2 = HiddenDDTwo.SelectedItem.Text;
+                    if ((playerUsername == id[0] && isBothCardsInHand(HiddenDDOne.SelectedItem.Text, HiddenDDTwo.SelectedItem.Text)) || playerUsername != id[0])
+                    {
+                        string card = HiddenDDOne.SelectedItem.Text;
+                        string card2 = HiddenDDTwo.SelectedItem.Text;
 
-                    Globals.GlobalAnalysis.updatePlayerCardCount(playerUsername, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(playerUsername)] - 2);
+                        Globals.GlobalAnalysis.updatePlayerCardCount(playerUsername, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(playerUsername)] - 2);
 
-                    //if new number of cards is zero do something to kick them out of the game
-                    
-                    int playerId = getUserId(playerUsername);
-                    insertAction(playerId, "Lose Card", "Lost a " + card + " and a " + card2, id[1]);
-     
-                    Globals.GlobalAnalysis.addActions(playerUsername + ": Lost the " + card + " and the " + card2);
+                        //if new number of cards is zero do something to kick them out of the game
 
-                    updateDeadCardCounters(card);
-                    updateDeadCardCounters(card2);
+                        int playerId = getUserId(playerUsername);
+                        insertAction(playerId, "Lose Card", "Lost a " + card + " and a " + card2, id[1]);
+
+                        Globals.GlobalAnalysis.addActions(playerUsername + ": Lost the " + card + " and the " + card2);
+
+                        updateDeadCardCounters(card);
+                        updateDeadCardCounters(card2);
+                    }
+                    else
+                    {
+                        ErrorLabel.Visible = true;
+                        ErrorLabel.Text = "One or both of thoses cards are not in your hand!";
+                        isError = true;
+                    }
                 }
                 else if (Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(playerUsername)] == 1)  //if they only have one card
                 {
-                    string card = HiddenDDOne.SelectedItem.Text;
+                    if ((playerUsername == id[0] && isCardInHand(HiddenDDOne.SelectedItem.Text)) || playerUsername != id[0])
+                    {
+                        string card = HiddenDDOne.SelectedItem.Text;
 
-                    Globals.GlobalAnalysis.updatePlayerCardCount(playerUsername, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(playerUsername)] - 1);
+                        Globals.GlobalAnalysis.updatePlayerCardCount(playerUsername, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(playerUsername)] - 1);
 
-                    //if new number of cards is zero do something to kick them out of the game
-                    int playerId = getUserId(playerUsername);
-                    insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
-           
-                    Globals.GlobalAnalysis.addActions(playerUsername + ": Lost the " + card);
+                        //if new number of cards is zero do something to kick them out of the game
+                        int playerId = getUserId(playerUsername);
+                        insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
 
-                    updateDeadCardCounters(card);
+                        Globals.GlobalAnalysis.addActions(playerUsername + ": Lost the " + card);
+
+                        updateDeadCardCounters(card);
+                    }
+                    else
+                    {
+                        ErrorLabel.Visible = true;
+                        ErrorLabel.Text = "That card is not in your hand!";
+                        isError = true;
+                    }
                 }
-                
-                if (playerUsername == id[0]) //if that player was the user, clear their hand
+                if (!isError)
                 {
-                    Globals.GlobalAnalysis.getCardsInHand().Clear();
+                    if (playerUsername == id[0]) //if that player was the user, clear their hand
+                    {
+                        Globals.GlobalAnalysis.getCardsInHand().Clear();
+                    }
+                    Globals.GlobalAnalysis.getPossibleCard(playerUsername).Clear();
+                    Globals.GlobalAnalysis.calculateStatistics();
                 }
-                Globals.GlobalAnalysis.getPossibleCard(playerUsername).Clear();
-                Globals.GlobalAnalysis.calculateStatistics();
             }
             else  //if the challenger lost and the challenger is not the player being assassinated, they both lose one card
             {
@@ -749,61 +803,70 @@ namespace FinalPro
                 string card2 = HiddenDDTwo.SelectedItem.Text;
                 playerUsername = HiddenDDThree.SelectedItem.Text;
 
-                Globals.GlobalAnalysis.updatePlayerCardCount(playerUsername, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(playerUsername)] - 1);
-                Globals.GlobalAnalysis.updatePlayerCardCount(PlayerDD.SelectedItem.Text, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(PlayerDD.SelectedItem.Text)] - 1);
-
-                //if new number of cards is zero do something to kick them out of the game
-       
-                int playerIdOne = getUserId(playerUsername);
-                insertAction(playerIdOne, "Lose Card", "Lost a " + card, id[1]);
-         
-                int playerIdTwo = getUserId(PlayerDD.SelectedItem.Text);
-                insertAction(playerIdTwo, "Lose Card", "Lost a " + card2, id[1]);
-
-                Globals.GlobalAnalysis.addActions(playerUsername + ": was Assassinated and lost the " + card2);
-                Globals.GlobalAnalysis.addActions(PlayerDD.SelectedItem.Text + ": Lost the " + card);
-
-                if (playerUsername == id[0])
+                if ((playerUsername == id[0] && isCardInHand(card2)) || (PlayerDD.SelectedItem.Text == id[0] && isCardInHand(card)) || (playerUsername != id[0] && PlayerDD.SelectedItem.Text != id[0]))
                 {
-                    Card c = new Card("Duke");
-                    for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
-                    {
-                        if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == card2)
-                            c = Globals.GlobalAnalysis.getCardsInHand()[i];
-                    }
-                    Globals.GlobalAnalysis.getCardsInHand().Remove(c);
-                }
-                else if(PlayerDD.SelectedItem.Text == id[0])
-                {
-                    Card c = new Card("Duke");
-                    for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
-                    {
-                        if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == card)
-                            c = Globals.GlobalAnalysis.getCardsInHand()[i];
-                    }
-                    Globals.GlobalAnalysis.getCardsInHand().Remove(c);
-                }
+                    Globals.GlobalAnalysis.updatePlayerCardCount(playerUsername, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(playerUsername)] - 1);
+                    Globals.GlobalAnalysis.updatePlayerCardCount(PlayerDD.SelectedItem.Text, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(PlayerDD.SelectedItem.Text)] - 1);
 
-                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(playerUsername).Count; i++)
-                {
-                    if(Globals.GlobalAnalysis.getPossibleCard(playerUsername)[i].T == card)
-                    {
-                        Globals.GlobalAnalysis.getPossibleCard(playerUsername).RemoveAt(i);
-                        break;
-                    }
-                }
-                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(PlayerDD.SelectedItem.Text).Count; i++)
-                {
-                    if(Globals.GlobalAnalysis.getPossibleCard(PlayerDD.SelectedItem.Text)[i].T == card2)
-                    {
-                        Globals.GlobalAnalysis.getPossibleCard(PlayerDD.SelectedItem.Text).RemoveAt(i);
-                        break;
-                    }
-                }
-                Globals.GlobalAnalysis.calculateStatistics();
+                    //if new number of cards is zero do something to kick them out of the game
 
-                updateDeadCardCounters(card);
-                updateDeadCardCounters(card2);
+                    int playerIdOne = getUserId(playerUsername);
+                    insertAction(playerIdOne, "Lose Card", "Lost a " + card2, id[1]);
+
+                    int playerIdTwo = getUserId(PlayerDD.SelectedItem.Text);
+                    insertAction(playerIdTwo, "Lose Card", "Lost a " + card, id[1]);
+
+                    Globals.GlobalAnalysis.addActions(playerUsername + ": was Assassinated and lost the " + card2);
+                    Globals.GlobalAnalysis.addActions(PlayerDD.SelectedItem.Text + ": Lost the " + card);
+
+                    if (playerUsername == id[0])
+                    {
+                        Card c = new Card("Duke");
+                        for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                        {
+                            if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == card2)
+                                c = Globals.GlobalAnalysis.getCardsInHand()[i];
+                        }
+                        Globals.GlobalAnalysis.getCardsInHand().Remove(c);
+                    }
+                    else if (PlayerDD.SelectedItem.Text == id[0])
+                    {
+                        Card c = new Card("Duke");
+                        for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                        {
+                            if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == card)
+                                c = Globals.GlobalAnalysis.getCardsInHand()[i];
+                        }
+                        Globals.GlobalAnalysis.getCardsInHand().Remove(c);
+                    }
+
+                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(playerUsername).Count; i++)
+                    {
+                        if (Globals.GlobalAnalysis.getPossibleCard(playerUsername)[i].T == card)
+                        {
+                            Globals.GlobalAnalysis.getPossibleCard(playerUsername).RemoveAt(i);
+                            break;
+                        }
+                    }
+                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(PlayerDD.SelectedItem.Text).Count; i++)
+                    {
+                        if (Globals.GlobalAnalysis.getPossibleCard(PlayerDD.SelectedItem.Text)[i].T == card2)
+                        {
+                            Globals.GlobalAnalysis.getPossibleCard(PlayerDD.SelectedItem.Text).RemoveAt(i);
+                            break;
+                        }
+                    }
+                    Globals.GlobalAnalysis.calculateStatistics();
+
+                    updateDeadCardCounters(card);
+                    updateDeadCardCounters(card2);
+                }
+                else
+                {
+                    ErrorLabel.Visible = true;
+                    ErrorLabel.Text = "That card is not in your hand!";
+                    isError = true;
+                }
             }
 
             if (Globals.CorBPlayer == id[0])
@@ -830,7 +893,20 @@ namespace FinalPro
             }
             else
             {
-                Response.Redirect("GamePlayPage.aspx");
+                if(!isError)
+                    Response.Redirect("GamePlayPage.aspx");
+            }
+        }
+
+        private bool isBothCardsInHand(string p1, string p2)
+        {
+            if((Globals.GlobalAnalysis.getCardsInHand()[0].getCardType() == p1 && Globals.GlobalAnalysis.getCardsInHand()[1].getCardType() == p2) || (Globals.GlobalAnalysis.getCardsInHand()[0].getCardType() == p2 && Globals.GlobalAnalysis.getCardsInHand()[1].getCardType() == p1))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -972,6 +1048,7 @@ namespace FinalPro
             string p2 = DropDownList1.SelectedItem.Text;
             string p3 = Globals.PlayerBlockingAssassination;
             string p4 = PlayerDD.SelectedItem.Text;
+            bool isError = false;
 
             if (((p2 == p3 && p1[0] == p4) || (p2 == p3 && p1[0] != p4)) && Globals.ChallengeStatus == "Won") //case one, challenger won and person being assassinated loses 2 cards
             {
@@ -980,167 +1057,203 @@ namespace FinalPro
                     string card = HiddenDDOne.SelectedItem.Text;
                     string card2 = HiddenDDTwo.SelectedItem.Text;
 
-                    Globals.GlobalAnalysis.updatePlayerCardCount(p2, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(p2)] - 2);
+                    if((p2.Contains(id[0]) && isBothCardsInHand(card, card2)) || !p2.Contains(id[0]))
+                    {
+                        Globals.GlobalAnalysis.updatePlayerCardCount(p2, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(p2)] - 2);
 
-                    //if new number of cards is zero do something to kick them out of the game
+                        //if new number of cards is zero do something to kick them out of the game
 
-                    int playerId = getUserId(p2);
-                    insertAction(playerId, "Lose Card", "Lost a " + card + " and a " + card2, id[1]);
+                        int playerId = getUserId(p2);
+                        insertAction(playerId, "Lose Card", "Lost a " + card + " and a " + card2, id[1]);
 
-                    Globals.GlobalAnalysis.addActions(p2 + ": Lost the " + card + " and the " + card2);
+                        Globals.GlobalAnalysis.addActions(p2 + ": Lost the " + card + " and the " + card2);
 
-                    updateDeadCardCounters(card);
-                    updateDeadCardCounters(card2);
+                        updateDeadCardCounters(card);
+                        updateDeadCardCounters(card2);
+                    }
+                    else
+                    {
+                        ErrorLabel.Visible = true;
+                        ErrorLabel.Text = "One or both of thoses cards are not in your hand!";
+                        isError = true;
+                    }
                 }
                 else if (Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(p2)] == 1)  //if they only have one card
                 {
                     string card = HiddenDDOne.SelectedItem.Text;
+                    if(p2.Contains(id[0]) && isCardInHand(card) || !p2.Contains(id[0]))
+                    {
+                        Globals.GlobalAnalysis.updatePlayerCardCount(p2, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(p2)] - 1);
 
-                    Globals.GlobalAnalysis.updatePlayerCardCount(p2, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(p2)] - 1);
+                        //if new number of cards is zero do something to kick them out of the game
+                        int playerId = getUserId(p2);
+                        insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
 
-                    //if new number of cards is zero do something to kick them out of the game
-                    int playerId = getUserId(p2);
-                    insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
+                        Globals.GlobalAnalysis.addActions(p2 + ": Lost the " + card);
 
-                    Globals.GlobalAnalysis.addActions(p2 + ": Lost the " + card);
-
-                    updateDeadCardCounters(card);
+                        updateDeadCardCounters(card);
+                    }
+                    else
+                    {
+                        ErrorLabel.Visible = true;
+                        ErrorLabel.Text = "That card is are not in your hand!";
+                        isError = true;
+                    }
                 }
-                if(p2 == id[0])
+                if(!isError)
                 {
-                    Globals.GlobalAnalysis.getCardsInHand().Clear();
+                    if(p2 == id[0])
+                    {
+                        Globals.GlobalAnalysis.getCardsInHand().Clear();
+                    }
+                    Globals.GlobalAnalysis.getPossibleCard(p2).Clear();
+                    Globals.GlobalAnalysis.calculateStatistics();
+                    Response.Redirect("GamePlayPage.aspx");
                 }
-                Globals.GlobalAnalysis.getPossibleCard(p2).Clear();
-                Globals.GlobalAnalysis.calculateStatistics();
-                Response.Redirect("GamePlayPage.aspx");
             }
             else if (((p2 != p3 && p1[0] == p4) || (p2 != p3 && p1[0] != p4)) && Globals.ChallengeStatus == "Won") //second case, challenger won and two players loses one card
             {
                 string card = HiddenDDOne.SelectedItem.Text;
                 string card2 = HiddenDDThree.SelectedItem.Text;
-
-                Globals.GlobalAnalysis.updatePlayerCardCount(p2, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(p2)] - 1);
-                Globals.GlobalAnalysis.updatePlayerCardCount(p3, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(p3)] - 1);
-
-                //if new number of cards is zero do something to kick them out of the game
-
-                int playerId = getUserId(p2);
-                insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
-
-                int playerIdTwo = getUserId(p3);
-                insertAction(playerIdTwo, "Lose Card", "Lost a " + card2, id[1]);
-
-                Globals.GlobalAnalysis.addActions(p2 + ": was assassinated and lost the " + card);
-                Globals.GlobalAnalysis.addActions(p3 + ": Lost the " + card2);
-
-                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(p2).Count; i++)
+                if ((p2.Contains(id[0]) && isCardInHand(card)) || (p3.Contains(id[0]) && isCardInHand(card2)) || (!p2.Contains(id[0]) && !p3.Contains(id[0])))
                 {
-                    if(Globals.GlobalAnalysis.getPossibleCard(p2)[i].T == card)
-                    {
-                        Globals.GlobalAnalysis.getPossibleCard(p2).RemoveAt(i);
-                        break;
-                    }
-                }
+                    Globals.GlobalAnalysis.updatePlayerCardCount(p2, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(p2)] - 1);
+                    Globals.GlobalAnalysis.updatePlayerCardCount(p3, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(p3)] - 1);
 
-                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(p3).Count; i++)
-                {
-                    if (Globals.GlobalAnalysis.getPossibleCard(p3)[i].T == card)
-                    {
-                        Globals.GlobalAnalysis.getPossibleCard(p3).RemoveAt(i);
-                        break;
-                    }
-                }
-                Globals.GlobalAnalysis.calculateStatistics();
+                    //if new number of cards is zero do something to kick them out of the game
 
-                updateDeadCardCounters(card);
-                updateDeadCardCounters(card2);
+                    int playerId = getUserId(p2);
+                    insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
 
-                if (p2 == id[0])
-                {
-                    Card c = new Card("Duke");
-                    for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                    int playerIdTwo = getUserId(p3);
+                    insertAction(playerIdTwo, "Lose Card", "Lost a " + card2, id[1]);
+
+                    Globals.GlobalAnalysis.addActions(p2 + ": was assassinated and lost the " + card);
+                    Globals.GlobalAnalysis.addActions(p3 + ": Lost the " + card2);
+
+                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(p2).Count; i++)
                     {
-                        if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == card)
-                            c = Globals.GlobalAnalysis.getCardsInHand()[i];
+                        if (Globals.GlobalAnalysis.getPossibleCard(p2)[i].T == card)
+                        {
+                            Globals.GlobalAnalysis.getPossibleCard(p2).RemoveAt(i);
+                            break;
+                        }
                     }
-                    Globals.GlobalAnalysis.getCardsInHand().Remove(c);
-                }
-                else if (p3 == id[0])
-                {
-                    Card c = new Card("Duke");
-                    for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+
+                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(p3).Count; i++)
                     {
-                        if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == card2)
-                            c = Globals.GlobalAnalysis.getCardsInHand()[i];
+                        if (Globals.GlobalAnalysis.getPossibleCard(p3)[i].T == card)
+                        {
+                            Globals.GlobalAnalysis.getPossibleCard(p3).RemoveAt(i);
+                            break;
+                        }
                     }
-                    Globals.GlobalAnalysis.getCardsInHand().Remove(c);
+                    Globals.GlobalAnalysis.calculateStatistics();
+
+                    updateDeadCardCounters(card);
+                    updateDeadCardCounters(card2);
+
+                    if (p2 == id[0])
+                    {
+                        Card c = new Card("Duke");
+                        for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                        {
+                            if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == card)
+                                c = Globals.GlobalAnalysis.getCardsInHand()[i];
+                        }
+                        Globals.GlobalAnalysis.getCardsInHand().Remove(c);
+                    }
+                    else if (p3 == id[0])
+                    {
+                        Card c = new Card("Duke");
+                        for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                        {
+                            if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == card2)
+                                c = Globals.GlobalAnalysis.getCardsInHand()[i];
+                        }
+                        Globals.GlobalAnalysis.getCardsInHand().Remove(c);
+                    }
+                    Response.Redirect("GamePlayPage.aspx");
                 }
-                Response.Redirect("GamePlayPage.aspx");
+                else
+                {
+                    ErrorLabel.Visible = true;
+                    ErrorLabel.Text = "That card is are not in your hand!";
+                    isError = true;
+                }
             }
             else //third case, challenger loses a card, and other player swaps out contessa
             {
                 string card = HiddenDDOne.SelectedItem.Text;
-
-                Globals.GlobalAnalysis.updatePlayerCardCount(p4, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(p4)] - 1);
-
-                //if new number of cards is zero do something to kick them out of the game
-                int playerId = getUserId(p4);
-                insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
-
-                Globals.GlobalAnalysis.addActions(p4 + ": Lost the " + card);
-
-                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(p4).Count; i++)
+                if ((p4.Contains(id[0]) && isCardInHand(card)) || !p4.Contains(id[0]))
                 {
-                    if(Globals.GlobalAnalysis.getPossibleCard(p4)[i].T == card)
-                    {
-                        Globals.GlobalAnalysis.getPossibleCard(p4).RemoveAt(i);
-                        break;
-                    }
-                }
-                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(p3).Count; i++)
-                {
-                    if(Globals.GlobalAnalysis.getPossibleCard(p3)[i].T == "Contessa")
-                    {
-                        Globals.GlobalAnalysis.getPossibleCard(p3).RemoveAt(i);
-                        break;
-                    }
-                }
-                Globals.GlobalAnalysis.calculateStatistics();
+                    Globals.GlobalAnalysis.updatePlayerCardCount(p4, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(p4)] - 1);
 
-                updateDeadCardCounters(card);
-                if (p1[0] == id[0]) //lose a card
-                {
-                    Card c = new Card("Duke");
-                    for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                    //if new number of cards is zero do something to kick them out of the game
+                    int playerId = getUserId(p4);
+                    insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
+
+                    Globals.GlobalAnalysis.addActions(p4 + ": Lost the " + card);
+
+                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(p4).Count; i++)
                     {
-                        if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == card)
-                            c = Globals.GlobalAnalysis.getCardsInHand()[i];
+                        if (Globals.GlobalAnalysis.getPossibleCard(p4)[i].T == card)
+                        {
+                            Globals.GlobalAnalysis.getPossibleCard(p4).RemoveAt(i);
+                            break;
+                        }
                     }
-                    Globals.GlobalAnalysis.getCardsInHand().Remove(c);
-                    Response.Redirect("GamePlayPage.aspx");
-                }
-                else if (p3 == id[0]) //swap out the contessa
-                {
-                    for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                    for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(p3).Count; i++)
                     {
-                        if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == "Contessa")
-                            Globals.GlobalAnalysis.getCardsInHand().RemoveAt(i);
+                        if (Globals.GlobalAnalysis.getPossibleCard(p3)[i].T == "Contessa")
+                        {
+                            Globals.GlobalAnalysis.getPossibleCard(p3).RemoveAt(i);
+                            break;
+                        }
                     }
+                    Globals.GlobalAnalysis.calculateStatistics();
 
-                    Label1.Text = "What is your new card?";
-                    HiddenDDOne.Visible = true;
-                    HiddenDDTwo.Visible = false;
-                    SubmitButton.Visible = false;
+                    updateDeadCardCounters(card);
+                    if (p1[0] == id[0]) //lose a card
+                    {
+                        Card c = new Card("Duke");
+                        for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                        {
+                            if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == card)
+                                c = Globals.GlobalAnalysis.getCardsInHand()[i];
+                        }
+                        Globals.GlobalAnalysis.getCardsInHand().Remove(c);
+                        Response.Redirect("GamePlayPage.aspx");
+                    }
+                    else if (p3 == id[0]) //swap out the contessa
+                    {
+                        for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                        {
+                            if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == "Contessa")
+                                Globals.GlobalAnalysis.getCardsInHand().RemoveAt(i);
+                        }
 
-                    HiddenDDOne.Items.Clear();
-                    populateCardsLeftDropDownList(HiddenDDOne);
+                        Label1.Text = "What is your new card?";
+                        HiddenDDOne.Visible = true;
+                        HiddenDDTwo.Visible = false;
+                        SubmitButton.Visible = false;
 
-                    ChallengeSubmitButton.Visible = true;
+                        HiddenDDOne.Items.Clear();
+                        populateCardsLeftDropDownList(HiddenDDOne);
+
+                        ChallengeSubmitButton.Visible = true;
+                    }
+                    else
+                    {
+                        Globals.GlobalAnalysis.addActions(Globals.CorBPlayer + ": Gets new card");
+                        Response.Redirect("GamePlayPage.aspx");
+                    }
                 }
                 else
                 {
-                    Globals.GlobalAnalysis.addActions(Globals.CorBPlayer + ": Gets new card");
-                    Response.Redirect("GamePlayPage.aspx");
+                    ErrorLabel.Visible = true;
+                    ErrorLabel.Text = "That card is are not in your hand!";
+                    isError = true;
                 }
             }
         }

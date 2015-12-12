@@ -28,6 +28,7 @@ namespace FinalPro
             Globals.GlobalAnalysis.getPlayerUsernames().Clear();
             Globals.GlobalAnalysis.getActions().Clear();
             Globals.GlobalAnalysis.getPlayerCardCounts().Clear();
+            Globals.GlobalAnalysis.clearAllPossibleCards();
 
             int numPlayers = 0;
             if (PlayerOneDD.SelectedValue != "1")

@@ -72,6 +72,7 @@
                 <br />
                 <asp:Button ID="YesButton" runat="server" OnClick="YesButton_Click" Text="Yes" Visible="False" />
                 &nbsp;<asp:Button ID="ChallengeSubmitButton" runat="server" OnClick="ChallengeSubmitButton_Click" Text="Submit" Visible="False" />
+                <asp:Label ID="ErrorLabel" runat="server" ForeColor="Red" Visible="False"></asp:Label>
                 <br />
                 <asp:Button ID="NoButton" runat="server" OnClick="NoButton_Click" Text="No" Visible="False" Width="37px" />
                 &nbsp;<br />

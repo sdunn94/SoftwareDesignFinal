@@ -104,6 +104,15 @@ namespace FinalPro
             }
         }
 
+        public void clearAllPossibleCards()
+        {
+            pOnePossibleCards.Clear();
+            pTwoPossibleCards.Clear();
+            pThreePossibleCards.Clear();
+            pFourPossibleCards.Clear();
+            pFivePossibleCards.Clear();
+        }
+
         public List<card> getPossibleCard(string user)
         {
             if (user == getPlayerUsernames()[0])
