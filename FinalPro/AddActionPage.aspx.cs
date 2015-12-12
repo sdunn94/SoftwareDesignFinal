@@ -86,11 +86,12 @@ namespace FinalPro
                     HiddenDDOne.Items.Clear();
                     HiddenDDOne.Items.Add("Select Player");
                     string[] id1 = Session["New"].ToString().Split(':');
-                    HiddenDDOne.Items.Add(id1[0]);
                     foreach (string username in Globals.GlobalAnalysis.getPlayerUsernames())
                     {
                         HiddenDDOne.Items.Add(username);
                     }
+
+                    HiddenDDOne.Items.Remove(PlayerDD.SelectedItem.Text);
 
                     HiddenDDTwo.Visible = true;
                     HiddenDDTwo.Items.Clear();
@@ -476,71 +477,86 @@ namespace FinalPro
             {
                 c2 = Globals.GlobalAnalysis.getCardsInHand()[1];
             }
-                       
-            if (!(Globals.DukeCounter == 2 && ((c1 != null && c1.getCardType().ToString() == "Duke") || (c2 != null && c2.getCardType().ToString() == "Duke"))))
+
+            if(Globals.DukeCounter != 3)
             {
-                list.Items.Add("Duke");
-            }
-            else if (!(Globals.DukeCounter == 1 && ((c1 != null && c1.getCardType().ToString() == "Duke") && (c2 != null && c2.getCardType().ToString() == "Duke"))))
-            {
-                list.Items.Add("Duke");
-            }
-            else if(!(Globals.DukeCounter == 3))
-            {
-                list.Items.Add("Duke");
+                if(Globals.DukeCounter == 2 && !isCardInHand("Duke"))
+                {
+                    list.Items.Add("Duke");
+                }
+                else if (Globals.DukeCounter == 1 && !isBothCardsInHand("Duke", "Duke"))
+                {
+                    list.Items.Add("Duke");
+                }
+                else if(Globals.DukeCounter == 0)
+                {
+                    list.Items.Add("Duke");
+                }
             }
 
-            if (!(Globals.CaptainCounter == 2 && ((c1 != null && c1.getCardType().ToString() == "Captain") || (c2 != null && c2.getCardType().ToString() == "Captain"))))
+            if (Globals.CaptainCounter != 3)
             {
-                list.Items.Add("Captain");
-            }
-            else if (!(Globals.CaptainCounter == 1 && ((c1 != null && c1.getCardType().ToString() == "Captain") && (c2 != null && c2.getCardType().ToString() == "Captain"))))
-            {
-                list.Items.Add("Captain");
-            }
-            else if (!(Globals.CaptainCounter == 3))
-            {
-                list.Items.Add("Captain");
-            }
-
-            if (!(Globals.AssassinCounter == 2 && ((c1 != null && c1.getCardType().ToString() == "Assassin") || (c2 != null && c2.getCardType().ToString() == "Assassin"))))
-            {
-                list.Items.Add("Assassin");
-            }
-            else if (!(Globals.AssassinCounter == 1 && ((c1 != null && c1.getCardType().ToString() == "Assassin") && (c2 != null && c2.getCardType().ToString() == "Assassin"))))
-            {
-                list.Items.Add("Assassin");
-            }
-            else if (!(Globals.AssassinCounter == 3))
-            {
-                list.Items.Add("Assassin");
+                if (Globals.CaptainCounter == 2 && !isCardInHand("Captain"))
+                {
+                    list.Items.Add("Captain");
+                }
+                else if (Globals.CaptainCounter == 1 && !isBothCardsInHand("Captain", "Captain"))
+                {
+                    list.Items.Add("Captain");
+                }
+                else if (Globals.CaptainCounter == 0)
+                {
+                    list.Items.Add("Captain");
+                }
             }
 
-            if (!(Globals.ContessaCounter == 2 && ((c1 != null && c1.getCardType().ToString() == "Contessa") || (c2 != null && c2.getCardType().ToString() == "Contessa"))))
+            if (Globals.AmbassadorCounter != 3)
             {
-                list.Items.Add("Contessa");
-            }
-            else if (!(Globals.ContessaCounter == 1 && ((c1 != null && c1.getCardType().ToString() == "Contessa") && (c2 != null && c2.getCardType().ToString() == "Contessa"))))
-            {
-                list.Items.Add("Contessa");
-            }
-            else if (!(Globals.ContessaCounter == 3))
-            {
-                list.Items.Add("Contessa");
+                if (Globals.AmbassadorCounter == 2 && !isCardInHand("Ambassador"))
+                {
+                    list.Items.Add("Ambassador");
+                }
+                else if (Globals.AmbassadorCounter == 1 && !isBothCardsInHand("Ambassador", "Ambassador"))
+                {
+                    list.Items.Add("Ambassador");
+                }
+                else if (Globals.AmbassadorCounter == 0)
+                {
+                    list.Items.Add("Ambassador");
+                }
             }
 
-            if (!(Globals.AmbassadorCounter == 2 && ((c1 != null && c1.getCardType().ToString() == "Ambassador") || (c2 != null && c2.getCardType().ToString() == "Ambassador"))))
+            if (Globals.ContessaCounter != 3)
             {
-                list.Items.Add("Ambassador");
+                if (Globals.ContessaCounter == 2 && !isCardInHand("Contessa"))
+                {
+                    list.Items.Add("Contessa");
+                }
+                else if (Globals.ContessaCounter == 1 && !isBothCardsInHand("Contessa", "Contessa"))
+                {
+                    list.Items.Add("Contessa");
+                }
+                else if (Globals.ContessaCounter == 0)
+                {
+                    list.Items.Add("Contessa");
+                }
             }
-            else if (!(Globals.AmbassadorCounter == 1 && ((c1 != null && c1.getCardType().ToString() == "Ambassador") && (c2 != null && c2.getCardType().ToString() == "Ambassador"))))
+
+            if (Globals.AssassinCounter != 3)
             {
-                list.Items.Add("Ambassador");
+                if (Globals.AssassinCounter == 2 && !isCardInHand("Assassin"))
+                {
+                    list.Items.Add("Assassin");
+                }
+                else if (Globals.AssassinCounter == 1 && !isBothCardsInHand("Assassin", "Assassin"))
+                {
+                    list.Items.Add("Assassin");
+                }
+                else if (Globals.AssassinCounter == 0)
+                {
+                    list.Items.Add("Assassin");
+                }
             }
-            else if (!(Globals.AmbassadorCounter == 3))
-            {
-                list.Items.Add("Ambassador");
-            }  
         }
 
         protected void SubmitButton_Click(object sender, EventArgs e)
@@ -968,7 +984,7 @@ namespace FinalPro
             DropDownList1.Visible = false;
             Button1.Visible = false;
             Button2.Visible = false;
-
+            Globals.ChallengeStatus = "Won";
             Globals.GlobalAnalysis.addActions(PlayerDD.SelectedItem.Text + ": wins the challenge");
             //person assassinating -> p1, person being assassinated -> p2, person blocking -> p3, person challenging -> p4
             //p1 -> Globals.PlayerAssassinating
@@ -1023,6 +1039,7 @@ namespace FinalPro
             DropDownList1.Visible = false;
             Button1.Visible = false;
             Button2.Visible = false;
+            Globals.ChallengeStatus = "Lost";
             Globals.GlobalAnalysis.addActions(PlayerDD.SelectedItem.Text + ": lost the challenge");
             //no matter who is doing what, the block holds and only the person challenging loses a card
             //and the person being challenged swaps out their contessa
