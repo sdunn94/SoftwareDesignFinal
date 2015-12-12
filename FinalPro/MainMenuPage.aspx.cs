@@ -18,6 +18,13 @@ namespace FinalPro
                 string[] id = Session["New"].ToString().Split(':');
                 Session["New"] = id[0];
                 Label1.Text = "Welcome " + Session["New"].ToString();
+
+                Globals.Stats = 0.0f;
+                Globals.AmbassadorCounter = 0;
+                Globals.AssassinCounter = 0;
+                Globals.CaptainCounter = 0;
+                Globals.ContessaCounter = 0;
+                Globals.DukeCounter = 0;
             }
             else
             {

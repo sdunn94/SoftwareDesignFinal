@@ -27,6 +27,7 @@ namespace FinalPro
             Globals.GlobalAnalysis.getDeadCards().Clear();
             Globals.GlobalAnalysis.getPlayerUsernames().Clear();
             Globals.GlobalAnalysis.getActions().Clear();
+            Globals.GlobalAnalysis.getPlayerCardCounts().Clear();
 
             int numPlayers = 0;
             if (PlayerOneDD.SelectedValue != "1")
@@ -37,33 +38,45 @@ namespace FinalPro
             }
             if (PlayerTwoDD.SelectedValue != "1")
             {
-                numPlayers++;
-                Globals.GlobalAnalysis.addPlayerUsername(PlayerTwoDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
+                if (!Globals.GlobalAnalysis.getPlayerUsernames().Contains(PlayerTwoDD.SelectedItem.Text))
+                {
+                    numPlayers++;
+                    Globals.GlobalAnalysis.addPlayerUsername(PlayerTwoDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
+                }
             }
             if (PlayerThreeDD.SelectedValue != "1")
             {
-                numPlayers++;
-                Globals.GlobalAnalysis.addPlayerUsername(PlayerThreeDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
+                if (!Globals.GlobalAnalysis.getPlayerUsernames().Contains(PlayerThreeDD.SelectedItem.Text))
+                {
+                    numPlayers++;
+                    Globals.GlobalAnalysis.addPlayerUsername(PlayerThreeDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
+                }
             }
             if (PlayerFourDD.SelectedValue != "1")
             {
-                numPlayers++;
-                Globals.GlobalAnalysis.addPlayerUsername(PlayerFourDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
+                if (!Globals.GlobalAnalysis.getPlayerUsernames().Contains(PlayerFourDD.SelectedItem.Text))
+                {
+                    numPlayers++;
+                    Globals.GlobalAnalysis.addPlayerUsername(PlayerFourDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
+                }
             }
             if (PlayerFiveDD.SelectedValue != "1")
             {
-                numPlayers++;
-                Globals.GlobalAnalysis.addPlayerUsername(PlayerFiveDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
+                if (!Globals.GlobalAnalysis.getPlayerUsernames().Contains(PlayerFiveDD.SelectedItem.Text))
+                {
+                    numPlayers++;
+                    Globals.GlobalAnalysis.addPlayerUsername(PlayerFiveDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
+                }
             }
 
             Globals.GlobalAnalysis.addPlayerUsername(Session["New"].ToString());
             Globals.GlobalAnalysis.getPlayerCardCounts().Add(2);
 
-            if (numPlayers > 0)
+            if (numPlayers > 0 && !CardOneDD.SelectedItem.Text.Contains("Select Card") && !CardTwoDD.SelectedItem.Text.Contains("Select Card"))
             {
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
                 conn.Open();

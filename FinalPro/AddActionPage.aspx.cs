@@ -60,204 +60,207 @@ namespace FinalPro
 
         protected void AddButton_Click(object sender, EventArgs e)
         {
-            string playerUsername = PlayerDD.SelectedItem.Text.ToString();
-            int playerId = getUserId(playerUsername);
-            string[] id = Session["New"].ToString().Split(':');
-            insertAction(playerId, ActionTypeDD.SelectedItem.Text, ActionDD.SelectedItem.Text, id[1]);
-
-            Globals.GlobalAnalysis.addActions(playerUsername + ": " + ActionDD.SelectedItem.Text);
-
-            if(ActionDD.SelectedItem.Text == "Foreign Aid")
+            if (!(PlayerDD.SelectedItem.Text.Contains("Select Player") || ActionTypeDD.SelectedItem.Text.Contains("Select Action Type") || ActionDD.Items.Count == 0 || ActionDD.SelectedItem.Text.Contains("Select Action")))
             {
-                //is there a block
-                Label1.Visible = true;
-                Label1.Text = "Did someone block foreign aid?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-            }
-            else if(ActionDD.SelectedItem.Text == "Coup")
-            {
-                //which card did they get rid of
-                Label1.Visible = true;
-                Label1.Text = "Who loses a card and what card did they lose?";
-                HiddenDDOne.Visible = true;
-                HiddenDDOne.Items.Clear();
-                HiddenDDOne.Items.Add("Select Player");
-                string[] id1 = Session["New"].ToString().Split(':');
-                HiddenDDOne.Items.Add(id1[0]);
-                foreach (string username in Globals.GlobalAnalysis.getPlayerUsernames())
+                string playerUsername = PlayerDD.SelectedItem.Text.ToString();
+                int playerId = getUserId(playerUsername);
+                string[] id = Session["New"].ToString().Split(':');
+                insertAction(playerId, ActionTypeDD.SelectedItem.Text, ActionDD.SelectedItem.Text, id[1]);
+
+                Globals.GlobalAnalysis.addActions(playerUsername + ": " + ActionDD.SelectedItem.Text);
+
+                if (ActionDD.SelectedItem.Text == "Foreign Aid")
                 {
-                    HiddenDDOne.Items.Add(username);
+                    //is there a block
+                    Label1.Visible = true;
+                    Label1.Text = "Did someone block foreign aid?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
                 }
-
-                HiddenDDTwo.Visible = true;
-                HiddenDDTwo.Items.Clear();
-                populateCardsLeftDropDownList(HiddenDDTwo);
-
-                SubmitButton.Visible = true;
-            }
-            else if (ActionDD.SelectedItem.Text == "Tax")
-            {
-                Globals.GlobalAnalysis.addPossibleCard("Duke", false, PlayerDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.calculateStatistics();
-
-                //did someone challenge this
-                Label1.Visible = true;
-                Label1.Text = "Did someone challenge tax?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-            }
-            else if (ActionDD.SelectedItem.Text == "Block Foreign Aid")
-            {
-                Globals.GlobalAnalysis.addPossibleCard("Duke", false, PlayerDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.calculateStatistics();
-
-                //did someone challenge this
-                Label1.Visible = true;
-                Label1.Text = "Did someone challenge blocking of foreign aid?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-            }
-            else if (ActionDD.SelectedItem.Text == "Assassinate")
-            {
-                Globals.GlobalAnalysis.addPossibleCard("Assassin", false, PlayerDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.calculateStatistics();
-
-                //did someone block or challenge (if no one challenges the person being assassinated loses a card)
-                Globals.PlayerAssassinating = PlayerDD.SelectedItem.Text;
-                Label1.Visible = true;
-                Label1.Text = "Did someone challenge or block assassination?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-            }
-            else if (ActionDD.SelectedItem.Text == "Exchange")
-            {
-                Globals.GlobalAnalysis.addPossibleCard("Ambassador", false, PlayerDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.calculateStatistics();
-
-                //did someone challenge this
-                Label1.Visible = true;
-                Label1.Text = "Did someone challenge the exchange?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-            }
-            else if (ActionDD.SelectedItem.Text == "Steal")
-            {
-                Globals.GlobalAnalysis.addPossibleCard("Captain", false, PlayerDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.calculateStatistics();
-
-                //did someone challenge this
-                Label1.Visible = true;
-                Label1.Text = "Did someone challenge or block the Steal?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-            }
-            else if (ActionDD.SelectedItem.Text == "Block Stealing")
-            {
-                Globals.GlobalAnalysis.addPossibleCard("Captain", true, PlayerDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.addPossibleCard("Ambassador", true, PlayerDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.calculateStatistics();
-
-                //did someone challenge this
-                Label1.Visible = true;
-                Label1.Text = "Did someone challenge blocking a steal?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-            }
-            else if (ActionDD.SelectedItem.Text == "Block Assassination")
-            {
-                Globals.GlobalAnalysis.addPossibleCard("Contessa", false, PlayerDD.SelectedItem.Text);
-                Globals.GlobalAnalysis.calculateStatistics();
-
-                //did someone challenge this
-                Globals.PlayerBlockingAssassination = PlayerDD.SelectedItem.Text;
-                Label1.Visible = true;
-                Label1.Text = "Did someone challenge blocking the assassination?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-            }
-            else if (ActionDD.SelectedItem.Text == "Challenge Tax")
-            {
-                Label1.Visible = true;
-                Label1.Text = "Did the challenger win?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-                //if challenger wins opponent loses a card
-                //if opponent wins challenger loses a card
-            }
-            else if (ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid")
-            {
-                Label1.Visible = true;
-                Label1.Text = "Did the challenger win?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-                //if challenger wins opponent loses a card
-                //if opponent wins challenger loses a card
-            }
-            else if (ActionDD.SelectedItem.Text == "Challenge Assassinate")
-            {
-                Label1.Visible = true;
-                Label1.Text = "Is the challenger the person being assassinated?";
-                YesButtonForAssassination.Visible = true;
-                NoButtonForAssassination.Visible = true;
-                //if challenger wins opponent loses a card unless it is the person being assassinated they lose two cards (if they have 2)
-                //if opponent wins challenger loses a card
-            }
-            else if (ActionDD.SelectedItem.Text == "Challenge Exchange")
-            {
-                Label1.Visible = true;
-                Label1.Text = "Did the challenger win?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-                //if challenger wins opponent loses a card
-                //if opponent wins challenger loses a card
-            }
-            else if (ActionDD.SelectedItem.Text == "Challenge Block Stealing")
-            {
-                Label1.Visible = true;
-                Label1.Text = "Did the challenger win?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-                //if challenger wins opponent loses a card
-                //if opponent wins challenger loses a card
-            }
-            else if (ActionDD.SelectedItem.Text == "Challenge Stealing")
-            {
-                Label1.Visible = true;
-                Label1.Text = "Did the challenger win?";
-                YesButton.Visible = true;
-                NoButton.Visible = true;
-                //if challenger wins opponent loses a card
-                //if opponent wins challenger loses a card
-            }
-            else if (ActionDD.SelectedItem.Text == "Challenge Block Assassination")
-            {
-                //Globals.PlayerAssassinating = Player being blocked
-                //Globals.PlayerBlockingAssassination
-                //ask who is being assassinated
-                //PlayerDD.SelectedItem.Text is person challenging the block on the assassination
-                //ask if the challenger won
-                Label2.Visible = true;
-                Label3.Visible = true;
-                Label4.Visible = true;
-                Label2.Text = Globals.PlayerAssassinating + " is being blocked by " + Globals.PlayerBlockingAssassination;
-                Label3.Text = "Who is being assassinated?";
-                DropDownList1.Visible = true;
-                DropDownList1.Items.Add("Select Player");
-                foreach(string un in Globals.GlobalAnalysis.getPlayerUsernames())
+                else if (ActionDD.SelectedItem.Text == "Coup")
                 {
-                    DropDownList1.Items.Add(un);
-                }
-                Label4.Text = "Did " + PlayerDD.SelectedItem.Text + " win the challenge?";
-                Button1.Visible = true;
-                Button2.Visible = true;
+                    //which card did they get rid of
+                    Label1.Visible = true;
+                    Label1.Text = "Who loses a card and what card did they lose?";
+                    HiddenDDOne.Visible = true;
+                    HiddenDDOne.Items.Clear();
+                    HiddenDDOne.Items.Add("Select Player");
+                    string[] id1 = Session["New"].ToString().Split(':');
+                    HiddenDDOne.Items.Add(id1[0]);
+                    foreach (string username in Globals.GlobalAnalysis.getPlayerUsernames())
+                    {
+                        HiddenDDOne.Items.Add(username);
+                    }
 
-                //if challenger wins opponent loses a card and person being assassinated loses a card
-                //if opponent wins challenger loses a card
-            }
-            else
-            {
-                Response.Redirect("GamePlayPage.aspx");
+                    HiddenDDTwo.Visible = true;
+                    HiddenDDTwo.Items.Clear();
+                    populateCardsLeftDropDownList(HiddenDDTwo);
+
+                    SubmitButton.Visible = true;
+                }
+                else if (ActionDD.SelectedItem.Text == "Tax")
+                {
+                    Globals.GlobalAnalysis.addPossibleCard("Duke", false, PlayerDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.calculateStatistics();
+
+                    //did someone challenge this
+                    Label1.Visible = true;
+                    Label1.Text = "Did someone challenge tax?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                }
+                else if (ActionDD.SelectedItem.Text == "Block Foreign Aid")
+                {
+                    Globals.GlobalAnalysis.addPossibleCard("Duke", false, PlayerDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.calculateStatistics();
+
+                    //did someone challenge this
+                    Label1.Visible = true;
+                    Label1.Text = "Did someone challenge blocking of foreign aid?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                }
+                else if (ActionDD.SelectedItem.Text == "Assassinate")
+                {
+                    Globals.GlobalAnalysis.addPossibleCard("Assassin", false, PlayerDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.calculateStatistics();
+
+                    //did someone block or challenge (if no one challenges the person being assassinated loses a card)
+                    Globals.PlayerAssassinating = PlayerDD.SelectedItem.Text;
+                    Label1.Visible = true;
+                    Label1.Text = "Did someone challenge or block assassination?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                }
+                else if (ActionDD.SelectedItem.Text == "Exchange")
+                {
+                    Globals.GlobalAnalysis.addPossibleCard("Ambassador", false, PlayerDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.calculateStatistics();
+
+                    //did someone challenge this
+                    Label1.Visible = true;
+                    Label1.Text = "Did someone challenge the exchange?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                }
+                else if (ActionDD.SelectedItem.Text == "Steal")
+                {
+                    Globals.GlobalAnalysis.addPossibleCard("Captain", false, PlayerDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.calculateStatistics();
+
+                    //did someone challenge this
+                    Label1.Visible = true;
+                    Label1.Text = "Did someone challenge or block the Steal?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                }
+                else if (ActionDD.SelectedItem.Text == "Block Stealing")
+                {
+                    Globals.GlobalAnalysis.addPossibleCard("Captain", true, PlayerDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.addPossibleCard("Ambassador", true, PlayerDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.calculateStatistics();
+
+                    //did someone challenge this
+                    Label1.Visible = true;
+                    Label1.Text = "Did someone challenge blocking a steal?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                }
+                else if (ActionDD.SelectedItem.Text == "Block Assassination")
+                {
+                    Globals.GlobalAnalysis.addPossibleCard("Contessa", false, PlayerDD.SelectedItem.Text);
+                    Globals.GlobalAnalysis.calculateStatistics();
+
+                    //did someone challenge this
+                    Globals.PlayerBlockingAssassination = PlayerDD.SelectedItem.Text;
+                    Label1.Visible = true;
+                    Label1.Text = "Did someone challenge blocking the assassination?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                }
+                else if (ActionDD.SelectedItem.Text == "Challenge Tax")
+                {
+                    Label1.Visible = true;
+                    Label1.Text = "Did the challenger win?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                    //if challenger wins opponent loses a card
+                    //if opponent wins challenger loses a card
+                }
+                else if (ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid")
+                {
+                    Label1.Visible = true;
+                    Label1.Text = "Did the challenger win?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                    //if challenger wins opponent loses a card
+                    //if opponent wins challenger loses a card
+                }
+                else if (ActionDD.SelectedItem.Text == "Challenge Assassinate")
+                {
+                    Label1.Visible = true;
+                    Label1.Text = "Is the challenger the person being assassinated?";
+                    YesButtonForAssassination.Visible = true;
+                    NoButtonForAssassination.Visible = true;
+                    //if challenger wins opponent loses a card unless it is the person being assassinated they lose two cards (if they have 2)
+                    //if opponent wins challenger loses a card
+                }
+                else if (ActionDD.SelectedItem.Text == "Challenge Exchange")
+                {
+                    Label1.Visible = true;
+                    Label1.Text = "Did the challenger win?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                    //if challenger wins opponent loses a card
+                    //if opponent wins challenger loses a card
+                }
+                else if (ActionDD.SelectedItem.Text == "Challenge Block Stealing")
+                {
+                    Label1.Visible = true;
+                    Label1.Text = "Did the challenger win?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                    //if challenger wins opponent loses a card
+                    //if opponent wins challenger loses a card
+                }
+                else if (ActionDD.SelectedItem.Text == "Challenge Stealing")
+                {
+                    Label1.Visible = true;
+                    Label1.Text = "Did the challenger win?";
+                    YesButton.Visible = true;
+                    NoButton.Visible = true;
+                    //if challenger wins opponent loses a card
+                    //if opponent wins challenger loses a card
+                }
+                else if (ActionDD.SelectedItem.Text == "Challenge Block Assassination")
+                {
+                    //Globals.PlayerAssassinating = Player being blocked
+                    //Globals.PlayerBlockingAssassination
+                    //ask who is being assassinated
+                    //PlayerDD.SelectedItem.Text is person challenging the block on the assassination
+                    //ask if the challenger won
+                    Label2.Visible = true;
+                    Label3.Visible = true;
+                    Label4.Visible = true;
+                    Label2.Text = Globals.PlayerAssassinating + " is being blocked by " + Globals.PlayerBlockingAssassination;
+                    Label3.Text = "Who is being assassinated?";
+                    DropDownList1.Visible = true;
+                    DropDownList1.Items.Add("Select Player");
+                    foreach (string un in Globals.GlobalAnalysis.getPlayerUsernames())
+                    {
+                        DropDownList1.Items.Add(un);
+                    }
+                    Label4.Text = "Did " + PlayerDD.SelectedItem.Text + " win the challenge?";
+                    Button1.Visible = true;
+                    Button2.Visible = true;
+
+                    //if challenger wins opponent loses a card and person being assassinated loses a card
+                    //if opponent wins challenger loses a card
+                }
+                else
+                {
+                    Response.Redirect("GamePlayPage.aspx");
+                }
             }
         } 
 
@@ -553,7 +556,7 @@ namespace FinalPro
           
                     Globals.GlobalAnalysis.addActions(playerUsername + ": Lost the " + card);
 
-                    if(ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.ChallengeStatus == "Lost")
+                    if(ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.ChallengeStatus == "Lost" && Globals.CorBPlayer != id[0])
                     {
                         Globals.GlobalAnalysis.addActions(Globals.CorBPlayer + ": Gets new card");
                     }
