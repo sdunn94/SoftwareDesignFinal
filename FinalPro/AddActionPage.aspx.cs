@@ -101,8 +101,11 @@ namespace FinalPro
                 }
                 else if (ActionDD.SelectedItem.Text == "Tax")
                 {
-                    Globals.GlobalAnalysis.addPossibleCard("Duke", false, PlayerDD.SelectedItem.Text);
-                    Globals.GlobalAnalysis.calculateStatistics();
+                    if (!PlayerDD.SelectedItem.Text.Contains(id[0]))
+                    {
+                        Globals.GlobalAnalysis.addPossibleCard("Duke", false, PlayerDD.SelectedItem.Text);
+                        Globals.GlobalAnalysis.calculateStatistics();
+                    }
 
                     //did someone challenge this
                     Label1.Visible = true;
@@ -112,9 +115,11 @@ namespace FinalPro
                 }
                 else if (ActionDD.SelectedItem.Text == "Block Foreign Aid")
                 {
-                    Globals.GlobalAnalysis.addPossibleCard("Duke", false, PlayerDD.SelectedItem.Text);
-                    Globals.GlobalAnalysis.calculateStatistics();
-
+                    if (!PlayerDD.SelectedItem.Text.Contains(id[0]))
+                    {
+                        Globals.GlobalAnalysis.addPossibleCard("Duke", false, PlayerDD.SelectedItem.Text);
+                        Globals.GlobalAnalysis.calculateStatistics();
+                    }
                     //did someone challenge this
                     Label1.Visible = true;
                     Label1.Text = "Did someone challenge blocking of foreign aid?";
@@ -123,9 +128,11 @@ namespace FinalPro
                 }
                 else if (ActionDD.SelectedItem.Text == "Assassinate")
                 {
-                    Globals.GlobalAnalysis.addPossibleCard("Assassin", false, PlayerDD.SelectedItem.Text);
-                    Globals.GlobalAnalysis.calculateStatistics();
-
+                    if (!PlayerDD.SelectedItem.Text.Contains(id[0]))
+                    {
+                        Globals.GlobalAnalysis.addPossibleCard("Assassin", false, PlayerDD.SelectedItem.Text);
+                        Globals.GlobalAnalysis.calculateStatistics();
+                    }
                     //did someone block or challenge (if no one challenges the person being assassinated loses a card)
                     Globals.PlayerAssassinating = PlayerDD.SelectedItem.Text;
                     Label1.Visible = true;
@@ -135,9 +142,11 @@ namespace FinalPro
                 }
                 else if (ActionDD.SelectedItem.Text == "Exchange")
                 {
-                    Globals.GlobalAnalysis.addPossibleCard("Ambassador", false, PlayerDD.SelectedItem.Text);
-                    Globals.GlobalAnalysis.calculateStatistics();
-
+                    if (!PlayerDD.SelectedItem.Text.Contains(id[0]))
+                    {
+                        Globals.GlobalAnalysis.addPossibleCard("Ambassador", false, PlayerDD.SelectedItem.Text);
+                        Globals.GlobalAnalysis.calculateStatistics();
+                    }
                     //did someone challenge this
                     Label1.Visible = true;
                     Label1.Text = "Did someone challenge the exchange?";
@@ -146,9 +155,11 @@ namespace FinalPro
                 }
                 else if (ActionDD.SelectedItem.Text == "Steal")
                 {
-                    Globals.GlobalAnalysis.addPossibleCard("Captain", false, PlayerDD.SelectedItem.Text);
-                    Globals.GlobalAnalysis.calculateStatistics();
-
+                    if (!PlayerDD.SelectedItem.Text.Contains(id[0]))
+                    {
+                        Globals.GlobalAnalysis.addPossibleCard("Captain", false, PlayerDD.SelectedItem.Text);
+                        Globals.GlobalAnalysis.calculateStatistics();
+                    }
                     //did someone challenge this
                     Label1.Visible = true;
                     Label1.Text = "Did someone challenge or block the Steal?";
@@ -157,10 +168,12 @@ namespace FinalPro
                 }
                 else if (ActionDD.SelectedItem.Text == "Block Stealing")
                 {
-                    Globals.GlobalAnalysis.addPossibleCard("Captain", true, PlayerDD.SelectedItem.Text);
-                    Globals.GlobalAnalysis.addPossibleCard("Ambassador", true, PlayerDD.SelectedItem.Text);
-                    Globals.GlobalAnalysis.calculateStatistics();
-
+                    if (!PlayerDD.SelectedItem.Text.Contains(id[0]))
+                    {
+                        Globals.GlobalAnalysis.addPossibleCard("Captain", true, PlayerDD.SelectedItem.Text);
+                        Globals.GlobalAnalysis.addPossibleCard("Ambassador", true, PlayerDD.SelectedItem.Text);
+                        Globals.GlobalAnalysis.calculateStatistics();
+                    }
                     //did someone challenge this
                     Label1.Visible = true;
                     Label1.Text = "Did someone challenge blocking a steal?";
@@ -169,9 +182,11 @@ namespace FinalPro
                 }
                 else if (ActionDD.SelectedItem.Text == "Block Assassination")
                 {
-                    Globals.GlobalAnalysis.addPossibleCard("Contessa", false, PlayerDD.SelectedItem.Text);
-                    Globals.GlobalAnalysis.calculateStatistics();
-
+                    if (!PlayerDD.SelectedItem.Text.Contains(id[0]))
+                    {
+                        Globals.GlobalAnalysis.addPossibleCard("Contessa", false, PlayerDD.SelectedItem.Text);
+                        Globals.GlobalAnalysis.calculateStatistics();
+                    }
                     //did someone challenge this
                     Globals.PlayerBlockingAssassination = PlayerDD.SelectedItem.Text;
                     Label1.Visible = true;
@@ -353,6 +368,53 @@ namespace FinalPro
                 YesButton.Visible = false;
                 NoButton.Visible = false;
             }
+            else if(ActionDD.SelectedItem.Text == "Challenge Exchange")
+            {
+                Globals.GlobalAnalysis.addActions(PlayerDD.SelectedItem.Text + ": Lost the challenge");
+
+                Label1.Text = "What card did " + PlayerDD.SelectedItem.Text + " lose?";
+
+                HiddenDDOne.Visible = true;
+                HiddenDDOne.Items.Clear();
+                populateCardsLeftDropDownList(HiddenDDOne);
+
+                if (Globals.CorBPlayer == id[0])
+                {
+                    AssassinatedPlayerLB.Text = "What are your new Cards?";
+                    HiddenDDThree.Visible = true;
+                    HiddenDDThree.Items.Clear();
+                    if (Globals.DukeCounter < 3)
+                        HiddenDDThree.Items.Add("Duke");
+                    if (Globals.ContessaCounter < 3)
+                        HiddenDDThree.Items.Add("Contessa");
+                    if (Globals.CaptainCounter < 3)
+                        HiddenDDThree.Items.Add("Captain");
+                    if (Globals.AssassinCounter < 3)
+                        HiddenDDThree.Items.Add("Assassin");
+                    if (Globals.AmbassadorCounter < 3)
+                        HiddenDDThree.Items.Add("Ambassador");
+
+                    if (Globals.GlobalAnalysis.getCardsInHand().Count == 2)
+                    {
+                        HiddenDDTwo.Visible = true;
+                        HiddenDDTwo.Items.Clear();
+                        if (Globals.DukeCounter < 3)
+                            HiddenDDTwo.Items.Add("Duke");
+                        if (Globals.ContessaCounter < 3)
+                            HiddenDDTwo.Items.Add("Contessa");
+                        if (Globals.CaptainCounter < 3)
+                            HiddenDDTwo.Items.Add("Captain");
+                        if (Globals.AssassinCounter < 3)
+                            HiddenDDTwo.Items.Add("Assassin");
+                        if (Globals.AmbassadorCounter < 3)
+                            HiddenDDTwo.Items.Add("Ambassador");
+                    }
+                }
+
+                SubmitButton.Visible = true;
+                YesButton.Visible = false;
+                NoButton.Visible = false;
+            }
             else if(ActionDD.SelectedItem.Text == "Assassinate")
             {
                 //show drop down for who loses a card and what card
@@ -376,8 +438,7 @@ namespace FinalPro
                 NoButton.Visible = false;
             }
             else if(ActionDD.SelectedItem.Text == "Challenge Tax" || ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid"
-                || ActionDD.SelectedItem.Text == "Challenge Exchange" || ActionDD.SelectedItem.Text == "Challenge Block Stealing"
-                || ActionDD.SelectedItem.Text == "Challenge Stealing")
+                || ActionDD.SelectedItem.Text == "Challenge Block Stealing" || ActionDD.SelectedItem.Text == "Challenge Stealing")
             {
                 //should this be added to the database?
                 Globals.GlobalAnalysis.addActions(PlayerDD.SelectedItem.Text + ": Lost the challenge");
@@ -574,6 +635,52 @@ namespace FinalPro
                 {
                     handleChallengeBlockAssassination();
                 }
+                else if(ActionDD.SelectedItem.Text == "Challenge Exchange" && Globals.ChallengeStatus == "Lost")
+                {
+                    string card = HiddenDDOne.SelectedItem.Text;
+                    string playerUsername = PlayerDD.SelectedItem.Text;
+                    Globals.GlobalAnalysis.updatePlayerCardCount(playerUsername, Globals.GlobalAnalysis.getPlayerCardCounts()[Globals.GlobalAnalysis.getPlayerUsernames().IndexOf(playerUsername)] - 1);
+
+                    int playerId = getUserId(playerUsername);
+                    insertAction(playerId, "Lose Card", "Lost a " + card, id[1]);
+
+                    Globals.GlobalAnalysis.addActions(playerUsername + ": Lost the " + card);
+
+                    if (!playerUsername.Contains(id[0]))
+                    {
+                        for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(playerUsername).Count; i++)
+                        {
+                            if (Globals.GlobalAnalysis.getPossibleCard(playerUsername)[i].T == card)
+                            {
+                                Globals.GlobalAnalysis.getPossibleCard(playerUsername).RemoveAt(i);
+                                break;
+                            }
+                        }
+                        Globals.GlobalAnalysis.calculateStatistics();
+                    }
+                    
+                    updateDeadCardCounters(card);
+
+                    if (Globals.CorBPlayer == id[0])
+                    {
+                        Globals.GlobalAnalysis.getCardsInHand().Clear();
+                        Globals.GlobalAnalysis.addCardsToHand(HiddenDDThree.SelectedItem.Text);
+                        if (HiddenDDTwo.Visible == true)
+                            Globals.GlobalAnalysis.addCardsToHand(HiddenDDTwo.SelectedItem.Text);
+                    }
+                    if(playerUsername == id[0])
+                    {
+                        foreach(Card c in Globals.GlobalAnalysis.getCardsInHand())
+                        {
+                            if(c.getCardType() == card)
+                            {
+                                Globals.GlobalAnalysis.getCardsInHand().Remove(c);
+                                break;
+                            }
+                        }
+                    }
+                    Response.Redirect("GamePlayPage.aspx");
+                }
                 else 
                 {
                     if (HiddenDDOne.SelectedItem.Text == id[0] && isCardInHand(HiddenDDTwo.SelectedItem.Text) || HiddenDDOne.SelectedItem.Text != id[0])
@@ -593,51 +700,54 @@ namespace FinalPro
                             Globals.GlobalAnalysis.addActions(Globals.CorBPlayer + ": Gets new card");
                         }
 
-                        for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(playerUsername).Count; i++)
+                        if (!playerUsername.Contains(id[0]))
                         {
-                            if (Globals.GlobalAnalysis.getPossibleCard(playerUsername)[i].T == card)
+                            for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(playerUsername).Count; i++)
                             {
-                                Globals.GlobalAnalysis.getPossibleCard(playerUsername).RemoveAt(i);
-                                break;
+                                if (Globals.GlobalAnalysis.getPossibleCard(playerUsername)[i].T == card)
+                                {
+                                    Globals.GlobalAnalysis.getPossibleCard(playerUsername).RemoveAt(i);
+                                    break;
+                                }
                             }
-                        }
 
-                        if (ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.ChallengeStatus == "Lost")
-                        {
-                            for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).Count; i++)
+                            if (ActionDD.SelectedItem.Text.Contains("Challenge") && Globals.ChallengeStatus == "Lost")
                             {
-                                if (ActionDD.SelectedItem.Text == "Challenge Tax" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Duke")
+                                for (int i = 0; i < Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).Count; i++)
                                 {
-                                    Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
-                                    break;
-                                }
-                                else if (ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Duke")
-                                {
-                                    Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
-                                    break;
-                                }
-                                else if (ActionDD.SelectedItem.Text == "Challenge Stealing" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Captain")
-                                {
-                                    Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
-                                    break;
-                                }
-                                else if (ActionDD.SelectedItem.Text == "Challenge Exchange")
-                                {
-                                    Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).Clear();
-                                    break;
-                                }
-                                else if (ActionDD.SelectedItem.Text == "Challenge Block Stealing")
-                                {
-                                    if (Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Captain" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].B)
+                                    if (ActionDD.SelectedItem.Text == "Challenge Tax" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Duke")
                                     {
-                                        Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i); //remove captain
-                                        Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i); //remove ambassador both of which were added becuase the player blocked a steal
+                                        Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
                                         break;
+                                    }
+                                    else if (ActionDD.SelectedItem.Text == "Challenge Block Foreign Aid" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Duke")
+                                    {
+                                        Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
+                                        break;
+                                    }
+                                    else if (ActionDD.SelectedItem.Text == "Challenge Stealing" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Captain")
+                                    {
+                                        Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i);
+                                        break;
+                                    }
+                                    else if (ActionDD.SelectedItem.Text == "Challenge Exchange")
+                                    {
+                                        Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).Clear();
+                                        break;
+                                    }
+                                    else if (ActionDD.SelectedItem.Text == "Challenge Block Stealing")
+                                    {
+                                        if (Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].T == "Captain" && Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer)[i].B)
+                                        {
+                                            Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i); //remove captain
+                                            Globals.GlobalAnalysis.getPossibleCard(Globals.CorBPlayer).RemoveAt(i); //remove ambassador both of which were added becuase the player blocked a steal
+                                            break;
+                                        }
                                     }
                                 }
                             }
+                            Globals.GlobalAnalysis.calculateStatistics();
                         }
-                        Globals.GlobalAnalysis.calculateStatistics();
 
                         updateDeadCardCounters(card);
 
@@ -662,35 +772,44 @@ namespace FinalPro
                                 cardToRemove = "Ambassador";
                             else if (ActionDD.SelectedItem.Text == "Challenge Block Stealing")
                             {//what to do if player has both ambassador and captain
-                                if(isCardInHand("Captain"))
-                                {
-                                    cardToRemove = "Captain";
-                                }
-                                else if(isCardInHand("Ambassador"))
-                                {
-                                    cardToRemove = "Ambassador";
-                                }
+                                Label1.Text = "What Card did you swap out?";
+                                HiddenDDOne.Items.Clear();
+                                HiddenDDOne.Items.Add("Captain");
+                                HiddenDDOne.Items.Add("Ambassador");
+
+                                SubmitButton.Visible = false;
+                                AssassinatedPlayerLB.Visible = true;
+                                AssassinatedPlayerLB.Text = "What is your new card?";
+                                HiddenDDThree.Visible = true;
+                                HiddenDDTwo.Visible = false;
+                                HiddenDDThree.Items.Clear();
+                                populateCardsLeftDropDownList(HiddenDDThree);
+
+                                SubmitChallengeBlockSteal.Visible = true;
                             }
                             else if (ActionDD.SelectedItem.Text == "Challenge Stealing")
                                 cardToRemove = "Captain";
                             else if (ActionDD.SelectedItem.Text == "Challenge Assassinate")
                                 cardToRemove = "Assassin";
 
-                            for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                            if (ActionDD.SelectedItem.Text != "Challenge Block Stealing")
                             {
-                                if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == cardToRemove)
-                                    Globals.GlobalAnalysis.getCardsInHand().RemoveAt(i);
+                                for (int i = 0; i < Globals.GlobalAnalysis.getCardsInHand().Count; i++)
+                                {
+                                    if (Globals.GlobalAnalysis.getCardsInHand()[i].getCardType() == cardToRemove)
+                                        Globals.GlobalAnalysis.getCardsInHand().RemoveAt(i);
+                                }
+
+                                Label1.Text = "What is your new card?";
+                                HiddenDDOne.Visible = true;
+                                HiddenDDTwo.Visible = false;
+                                SubmitButton.Visible = false;
+
+                                HiddenDDOne.Items.Clear();
+                                populateCardsLeftDropDownList(HiddenDDOne);
+
+                                ChallengeSubmitButton.Visible = true;
                             }
-
-                            Label1.Text = "What is your new card?";
-                            HiddenDDOne.Visible = true;
-                            HiddenDDTwo.Visible = false;
-                            SubmitButton.Visible = false;
-
-                            HiddenDDOne.Items.Clear();
-                            populateCardsLeftDropDownList(HiddenDDOne);
-
-                            ChallengeSubmitButton.Visible = true;
                         }
                         else
                         {
@@ -904,7 +1023,7 @@ namespace FinalPro
                     else
                     {
                         ErrorLabel.Visible = true;
-                        ErrorLabel.Text = "It is not for both to lose the " + card + "!";
+                        ErrorLabel.Text = "It is not possible for both to lose the " + card + "!";
                         isError = true;
                     }
                 }
@@ -1414,6 +1533,21 @@ namespace FinalPro
                 }
             }
             return retVal;
+        }
+
+        protected void SubmitChallengeBlockSteal_Click(object sender, EventArgs e)
+        {
+            //replace HiddenDDOne with HiddenDDThree
+            foreach(Card c in Globals.GlobalAnalysis.getCardsInHand())
+            {
+                if(c.getCardType() == HiddenDDOne.SelectedItem.Text)
+                {
+                    Card card = new Card(HiddenDDThree.SelectedItem.Text);
+                    Globals.GlobalAnalysis.getCardsInHand()[Globals.GlobalAnalysis.getCardsInHand().IndexOf(c)] = card;
+                    break;
+                }
+            }
+            Response.Redirect("GamePlayPage.aspx");
         }
     }
 }
