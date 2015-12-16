@@ -19,6 +19,8 @@ namespace FinalPro
             PlayerThreeDD.Items.Remove(Session["New"].ToString());
             PlayerFourDD.Items.Remove(Session["New"].ToString());
             PlayerFiveDD.Items.Remove(Session["New"].ToString());
+
+            Globals.Stats = 100.0f;
         }
 
         protected void StartGameButton_Click(object sender, EventArgs e)

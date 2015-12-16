@@ -57,6 +57,27 @@ namespace FinalPro
             ListBox1.Visible = true;
             ListBox2.Visible = true;
             ListBox3.Visible = true;
+            List<string> ids = new List<string>();
+            //query to get all actions with the correct game id
+            string query = "SELECT Player FROM ActionDataTable WHERE GameId = '" + DropDownList1.SelectedItem.Text + "'";
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["RegistrationConnectionString"].ConnectionString);
+            conn.Open();
+            SqlCommand com = new SqlCommand(query, conn);
+            SqlDataReader sqlReader = com.ExecuteReader();
+            while(sqlReader.Read())
+            {
+                ids.Add(sqlReader.GetValue(0).ToString());
+            }
+            conn.Close();
+            conn.Open();
+            foreach (string s in ids)
+            {
+                string query2 = "SELECT Username FROM UserDataTable WHERE Id = '" + s + "'";
+                SqlCommand com2 = new SqlCommand(query2, conn);
+                string username = com2.ExecuteScalar().ToString();
+                ListBox1.Items.Add(username);
+            }
+            conn.Close();
         }
 
         protected void Button1_Click(object sender, EventArgs e)

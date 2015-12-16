@@ -36,7 +36,7 @@
         <asp:Label ID="Label3" runat="server" Text="The Winner of the game was: "></asp:Label>
         <br />
         <br />
-        <asp:ListBox ID="ListBox1" runat="server" DataSourceID="SqlDataSource2" DataTextField="Player" DataValueField="Player" Height="446px" Width="78px"></asp:ListBox>
+        <asp:ListBox ID="ListBox1" runat="server" Height="446px" Width="78px"></asp:ListBox>
         <asp:ListBox ID="ListBox2" runat="server" DataSourceID="SqlDataSource2" DataTextField="ActionType" DataValueField="ActionType" Height="446px" style="margin-top: 0px" Width="207px"></asp:ListBox>
         <asp:ListBox ID="ListBox3" runat="server" DataSourceID="SqlDataSource2" DataTextField="Action" DataValueField="Action" Height="446px" Width="212px"></asp:ListBox>
 &nbsp;</div>
